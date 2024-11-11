@@ -14,7 +14,7 @@
   <div th:if="${tour != null}">
     <div class="tour-detail-container">
       <div class="tour-detail-image">
-        <img th:if="${tour.avatar != null}" th:src="@{'/uploads/' + ${tour.avatar}}" alt="Avatar" class="img-fluid">
+        <img th:if="${tour.avatar != null}" th:src="@{'/static/uploads/' + ${tour.avatar}}" alt="Avatar" class="img-fluid">
         <p th:if="${tour.avatar == null}">No image available</p> <!-- Hiển thị thông báo nếu không có hình ảnh -->
       </div>
 
@@ -23,7 +23,7 @@
         <div class="tour-other-images">
           <div th:if="${tour.images != null}">
             <div th:each="image : ${tour.images}">
-              <img th:src="@{'/uploads/' + ${image.url}}" alt="Product Image" class="img-fluid">
+              <img th:src="@{'/static/uploads/' + ${image.url}}" alt="Product Image" class="img-fluid">
             </div>
           </div>
           <p th:if="${tour.images == null}">No additional images</p> <!-- Thông báo nếu không có ảnh bổ sung -->
