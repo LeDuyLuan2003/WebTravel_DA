@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    <link rel="stylesheet" th:href="@{/css/users/contact.css}">
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container contact-container">
+        <div class="company-info">
+            <h2>Company Information</h2>
+            <div class="info-item">
+                <i class="bi bi-geo-alt-fill"></i>
+                <p>
+                    <strong>Headquarters:</strong><br>
+                    Khu tái định cư Tân Hiệp – Đường Phạm Thị Nghĩa – khu Phố 5 – Phường Tân Hiệp – Thành phố Biên Hòa – Tỉnh Đồng Nai
+                </p>
+            </div>
+            <div class="info-item">
+                <i class="bi bi-telephone-fill"></i>
+                <p>
+                    <strong>Hotline:</strong><br>
+                    083 734 5939 – 058 566 2585
+                </p>
+            </div>
+            <div class="info-item">
+                <i class="bi bi-envelope-fill"></i>
+                <p>
+                    <strong>Email:</strong><br>
+                    <a href="mailto:vietnamamazing.hcmc@gmail.com">vietnamamazing.hcmc@gmail.com</a>
+                </p>
+            </div>
+            <div class="info-item">
+                <i class="bi bi-facebook"></i>
+                <p>
+                    <strong>Facebook:</strong><br>
+                    <a href="https://www.facebook.com/vietnamamazing" target="_blank">facebook.com/vietnamamazing</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h1 class="contact-heading">Get in Touch with Us</h1>
+            <form action="/submit-contact" method="post">
+                <div class="mb-3" style="position: relative;">
+                    <input type="text" class="form-control" id="name" name="name" placeholder=" " required>
+                    <label for="name" class="form-label">Full Name</label>
+                </div>
+                <div class="mb-3" style="position: relative;">
+                    <input type="email" class="form-control" id="email" name="email" placeholder=" " required>
+                    <label for="email" class="form-label">Email Address</label>
+                </div>
+                <div class="mb-3" style="position: relative;">
+                    <input type="tel" class="form-control" id="phone" name="phone" placeholder=" ">
+                    <label for="phone" class="form-label">Phone Number</label>
+                </div>
+                <div class="mb-3" style="position: relative;">
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder=" " required>
+                    <label for="subject" class="form-label">Subject</label>
+                </div>
+                <div class="mb-3" style="position: relative;">
+                    <textarea class="form-control" id="message" name="message" rows="5" placeholder=" " required></textarea>
+                    <label for="message" class="form-label">Message</label>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn contact-submit-btn">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

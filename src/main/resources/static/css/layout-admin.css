@@ -1,0 +1,145 @@
+/* Reset CSS */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    overflow: hidden; /* Ngăn chặn thanh cuộn trên body */
+}
+
+.wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: #343a40;
+    color: #fff;
+    position: fixed; /* Sửa từ absolute thành fixed để sidebar cố định */
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 2; /* Ưu tiên hiển thị sidebar */
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active {
+    transform: translateX(-260px);
+}
+
+.sidebar .sidebar-wrapper {
+    padding: 20px;
+}
+
+.sidebar .logo {
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .nav {
+    list-style: none;
+    margin-top: 20px; /* Để tách biệt logo và mục đầu tiên */
+}
+
+.sidebar .nav .nav-item {
+    margin: 10px 0;
+}
+
+.sidebar .nav .nav-link {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav .nav-link i {
+    margin-right: 10px;
+}
+
+.sidebar .nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav .logout {
+    margin-top: auto; /* Đưa logout xuống cuối */
+}
+
+/* Main Panel */
+.main-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ngăn chặn thanh cuộn trên main-panel */
+    margin-left: 260px; /* Đảm bảo main-panel không bị che bởi sidebar */
+    transition: margin-left 0.3s ease;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.96);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s linear;
+}
+
+.navbar .navbar-toggler {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.navbar .navbar-brand,
+.sidebar .logo a {
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* Cho phép cuộn dọc trong content */
+}
+
+.footer {
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e7e7e7;
+    text-align: center;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        transform: translateX(-260px);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-panel {
+        margin-left: 0;
+    }
+
+    .navbar .navbar-toggler {
+        display: block;
+    }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Category List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="container mt-5">
+        <!-- Hiển thị tên Category -->
+        <h1>Item Category List for <span th:text="${category != null} ? ${category.name} : 'Unknown Category'">Category Name</span></h1>
+
+        <a class="btn btn-primary mb-3" th:href="@{/admin/itemCategory/add}">Add New Item Category</a>
+
+        <table id="categoryTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="itemCategory : ${itemCategories}">
+                <td th:text="${itemCategory.id}">1</td>
+                <td th:text="${itemCategory.name}">Item Category Name</td>
+                <td>
+                    <a class="btn btn-success btn-sm" th:href="@{/admin/itemCategory/update/{id}(id=${itemCategory.id})}">Edit</a>
+                    <a class="btn btn-danger btn-sm" th:href="@{/admin/itemCategory/delete/{id}(id=${itemCategory.id})}"
+                       onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#categoryTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+    </script>
+    <a th:href="@{/admin/category}" class="btn btn-secondary mt-3">Back to Category List</a>
+</section>
+</body>
+</html>

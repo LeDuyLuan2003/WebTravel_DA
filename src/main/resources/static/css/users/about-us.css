@@ -1,0 +1,111 @@
+body {
+    background-color: #F5F7FA;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.banner-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 0;
+}
+
+.text-content {
+    font-size: 18px;
+    color: #333;
+}
+
+.text-content h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.image-content img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.section-content {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.section-content .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+/* Phần section vision */
+.vision-mission {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+/*phân chia section vision giữa img và text */
+.vision-mission .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Định dạng cho hình ảnh trong phần vision */
+.vision-mission img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/*Section Values */
+.core-values {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.core-values .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.core-values img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
+.get-in-touch {
+    background-color: #007bff; /* Đổi mã màu này thành màu bạn mong muốn */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.get-in-touch a {
+    color: white;
+    background-color: #6c757d; /* Điều chỉnh lại màu nút để dễ nhìn */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.get-in-touch a:hover {
+    background-color: #5a6268; /* Màu nút khi hover */
+}
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+  <meta charset="UTF-8">
+  <title>Tour List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+</head>
+<body>
+<section layout:fragment="custom-content">
+  <div class="container mt-5">
+    <h1>Tour List</h1>
+    <a class="btn btn-primary mb-3" th:href="@{/admin/tour/add}">Add New Tour</a>
+    <table id="tourTable" class="table table-striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Item Category</th> <!-- Thêm cột ItemCategory -->
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="tour : ${tours}">
+        <td th:text="${tour.id}">1</td>
+        <td th:text="${tour.name}">Tour Name</td>
+        <td th:text="${tour.price}">100.00</td>
+        <td th:text="${tour.itemCategory.name}">Item Category</td> <!-- Hiển thị tên của ItemCategory -->
+        <td>
+          <a class="btn btn-info btn-sm" th:href="@{/admin/tour/detail/{id}(id=${tour.id})}">Details</a>
+          <a class="btn btn-warning btn-sm" th:href="@{/admin/tour/update/{id}(id=${tour.id})}">Edit</a>
+          <a class="btn btn-danger btn-sm" th:href="@{/admin/tour/delete/{id}(id=${tour.id})}"
+             onclick="return confirm('Are you sure you want to delete this tour?');">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    $(document).ready(function() {
+        $('#tourTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true
+        });
+    });
+  </script>
+</section>
+</body>
+</html>

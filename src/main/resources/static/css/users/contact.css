@@ -1,0 +1,157 @@
+
+        body {
+            background-color: #f3f4f6;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 50px;
+            background: linear-gradient(to right, #ffffff, #f0f8ff);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .company-info {
+            width: 30%;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-info h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .company-info p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .company-info .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: slideIn 0.8s forwards;
+        }
+
+        /* Example of updated icon color styling */
+        .company-info .info-item i {
+            font-size: 24px;
+            color: #E67E22;
+            margin-right: 15px;
+        }
+
+
+        .contact-form {
+            width: 70%;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 200px;
+            height: 200px;
+            background: #007bff;
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: pulse 3s infinite;
+        }
+
+        .contact-heading {
+            font-weight: bold;
+            font-size: 1.75rem;
+            color: #4d4d4d;
+            text-align: center;
+            margin-bottom: 25px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .form-control {
+            position: relative;
+            font-size: 16px;
+            padding: 10px 10px 10px 5px;
+            width: 100%;
+            border: 1px solid #ddd;
+            background: none;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            background-color: #f0f8ff;
+        }
+
+        .form-label {
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            pointer-events: none;
+            font-size: 16px;
+            color: #666;
+            transition: 0.3s ease;
+            background: #ffffff;
+            padding: 0 5px;
+            opacity: 0.9;
+        }
+
+        .form-control:focus + .form-label,
+        .form-control:not(:placeholder-shown) + .form-label {
+            top: -8px;
+            left: 10px;
+            font-size: 12px;
+            color: #007bff;
+        }
+
+        .contact-submit-btn {
+            background-color: #E67E22; /* Màu cam cho nút */
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 200px;
+            width: 100%;
+        }
+
+        .contact-submit-btn:hover {
+            background-color: #D35400; /* Màu khi hover */
+            transform: scale(1.05);
+        }
+
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.1; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+            100% { transform: scale(0.9); opacity: 0.1; }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }

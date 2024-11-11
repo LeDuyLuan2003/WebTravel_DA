@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/layout-admin.css}">
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-color="purple">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a th:href="@{/admin}" class="simple-text">
+                    <img th:src="@{/uploads/amazingLogo.jpg}"
+                         alt="VIETNAM AMAZING LOGO" style="width: 100px; height: auto;">
+                </a>
+            </div>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/employees}">
+                        <p>Employees</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/customers}">
+                        <p>Customers</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/category}">
+                        <p>Categories</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/tour}">
+                        <p>Tours</p>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display: none;" id="logout-form">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                    </form>
+                    <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <p>Đăng xuất</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Main Panel -->
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a class="navbar-brand" th:href="@{/admin}">Dashboard</a>
+            <button class="navbar-toggler" type="button" onclick="toggleSidebar()">
+                <span>☰</span>
+            </button>
+        </nav>
+        <!-- Content -->
+        <div class="content">
+            <section layout:fragment="custom-content">
+                <!-- Nội dung trang con sẽ được chèn vào đây -->
+            </section>
+        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> group 1</p>
+        </footer>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>
