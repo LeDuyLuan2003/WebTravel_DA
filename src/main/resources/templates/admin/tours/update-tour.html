@@ -80,7 +80,7 @@
       <input type="file" name="avatarFile" class="form-control" id="avatarFile">
       <div class="mt-2">
     <span th:if="${tour.avatar}">
-      <img th:src="@{'/images/' + ${tour.avatar}}" alt="Current Avatar" class="mt-2" style="max-width: 100px;">
+      <img th:src="@{'images/' + ${tour.avatar}}" alt="Current Avatar" class="mt-2" style="max-width: 100px;">
     </span>
       </div>
     </div>
@@ -91,7 +91,7 @@
       <input type="file" name="imageFiles" class="form-control" id="imageFiles" multiple>
       <div class="mt-2">
     <span th:each="image : ${tour.images}">
-      <img th:src="@{'/images/' + ${image.url}}" alt="Additional Image" style="max-width: 100px;" class="m-1">
+      <img th:src="@{'images/' + ${image.url}}" alt="Additional Image" style="max-width: 100px;" class="m-1">
     </span>
       </div>
     </div>

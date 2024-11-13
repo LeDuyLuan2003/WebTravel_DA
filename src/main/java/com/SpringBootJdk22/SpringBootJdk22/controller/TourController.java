@@ -190,22 +190,15 @@ public class TourController {
 
     // Save file to "static/uploads"
     private String saveFile(MultipartFile file) throws IOException {
-
-            String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-
-            // Đường dẫn đến thư mục "static/uploads"
-            Path filePath = Paths.get("images", fileName);
-
-            // Tạo thư mục nếu chưa tồn tại
-            if (Files.notExists(filePath.getParent())) {
-                Files.createDirectories(filePath.getParent());
-            }
-
-            // Lưu file vào thư mục
-            Files.write(filePath, file.getBytes());
-
-            // Trả về tên file để sử dụng trong view
-            return fileName;
-
+        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get("images", fileName);
+        // Tạo thư mục nếu chưa tồn tại
+        if (Files.notExists(filePath.getParent())) {
+            Files.createDirectories(filePath.getParent());
+        }
+        // Lưu file vào thư mục
+        Files.write(filePath, file.getBytes());
+        return fileName;
     }
+
 }

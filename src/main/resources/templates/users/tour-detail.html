@@ -45,12 +45,12 @@
         <div class="carousel-inner">
           <!-- Hiển thị hình ảnh chính của tour -->
           <div class="carousel-item active">
-            <img th:src="@{'/uploads/' + ${tour.avatar}}" class="img-fluid d-block w-100" alt="Tour Image">
+            <img th:src="@{'/images/' + ${tour.avatar}}" class="img-fluid d-block w-100" alt="Tour Image">
           </div>
 
           <!-- Hiển thị các hình ảnh khác của tour -->
           <div th:each="image, iterStat : ${tour.images}" class="carousel-item">
-            <img th:src="@{'/uploads/' + ${image.url}}" class="d-block w-100" alt="Tour Image">
+            <img th:src="@{'/images/' + ${image.url}}" class="d-block w-100" alt="Tour Image">
           </div>
         </div>
 
