@@ -45,12 +45,12 @@
         <div class="carousel-inner">
           <!-- Hiển thị hình ảnh chính của tour -->
           <div class="carousel-item active">
-            <img th:src="@{'/uploads/' + ${tour.avatar}}" class="img-fluid d-block w-100" alt="Tour Image">
+            <img th:src="@{'/images/' + ${tour.avatar}}" class="img-fluid d-block w-100" alt="Tour Image">
           </div>
 
           <!-- Hiển thị các hình ảnh khác của tour -->
           <div th:each="image, iterStat : ${tour.images}" class="carousel-item">
-            <img th:src="@{'/uploads/' + ${image.url}}" class="d-block w-100" alt="Tour Image">
+            <img th:src="@{'/images/' + ${image.url}}" class="d-block w-100" alt="Tour Image">
           </div>
         </div>
 
@@ -67,10 +67,10 @@
 
       <!-- Hiển thị các ảnh nhỏ bên dưới (thumbnail) để điều hướng -->
       <div class="thumbnail-images mt-3">
-        <img th:if="${tour.avatar != null}" th:src="@{'/uploads/' + ${tour.avatar}}" alt="Avatar thumbnail" class="img-thumbnail" data-bs-target="#tourCarousel" data-bs-slide-to="0" aria-current="true">
+        <img th:if="${tour.avatar != null}" th:src="@{'/images/' + ${tour.avatar}}" alt="Avatar thumbnail" class="img-thumbnail" data-bs-target="#tourCarousel" data-bs-slide-to="0" aria-current="true">
 
         <div th:each="image, iterStat : ${tour.images}">
-          <img th:src="@{'/uploads/' + ${image.url}}" class="img-thumbnail" alt="Tour thumbnail" data-bs-target="#tourCarousel" th:data-bs-slide-to="${iterStat.index + 1}">
+          <img th:src="@{'/images/' + ${image.url}}" class="img-thumbnail" alt="Tour thumbnail" data-bs-target="#tourCarousel" th:data-bs-slide-to="${iterStat.index + 1}">
         </div>
       </div>
 

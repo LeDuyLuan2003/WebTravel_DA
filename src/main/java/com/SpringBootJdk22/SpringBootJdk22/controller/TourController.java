@@ -194,7 +194,7 @@ public class TourController {
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
             // Đường dẫn đến thư mục "static/uploads"
-            Path filePath = Paths.get("src/main/resources/static/uploads", fileName);
+            Path filePath = Paths.get("images", fileName);
 
             // Tạo thư mục nếu chưa tồn tại
             if (Files.notExists(filePath.getParent())) {
