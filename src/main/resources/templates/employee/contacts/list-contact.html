@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-employee}">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+</head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+    <h1>Contact List</h1>
+
+    <table id="contactTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Created Date</th>
+            <th>Responded</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contact : ${contacts}">
+            <td th:text="${contact.id}"></td>
+            <td th:text="${contact.name}"></td>
+            <td th:text="${contact.email}"></td>
+            <td th:text="${contact.phone}"></td>
+            <td th:text="${contact.subject}"></td>
+            <td th:text="${contact.message}"></td>
+            <td th:text="${#temporals.format(contact.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td>
+                <form th:action="@{/employee/contact/updateStatus}" method="post" style="display:inline;">
+                    <input type="hidden" th:value="${contact.id}" name="contactId">
+                    <select name="responded" class="form-select form-select-sm status-dropdown" onchange="this.form.submit()">
+                        <option value="true" class="bg-success text-white" th:selected="${contact.responded}">Yes</option>
+                        <option value="false" class="bg-warning text-dark" th:selected="${!contact.responded}">No</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+            $('#contactTable').DataTable({
+                paging: true,        // Phân trang
+                searching: true,     // Cho phép tìm kiếm
+                ordering: true,      // Cho phép sắp xếp
+                info: true,          // Hiển thị thông tin số dòng
+
+            });
+        });
+    </script>
+    <script>
+        // Hàm cập nhật màu dropdown
+        function updateDropdownColor(dropdown) {
+            // Xóa các lớp màu trước đó
+            dropdown.classList.remove('bg-success', 'bg-warning', 'text-white', 'text-dark');
+
+            // Kiểm tra giá trị và thêm lớp màu phù hợp
+            if (dropdown.value === 'true') {
+                dropdown.classList.add('bg-success', 'text-white'); // Màu xanh lá cây
+            } else {
+                dropdown.classList.add('bg-warning', 'text-dark'); // Màu vàng
+            }
+        }
+
+        // Áp dụng màu ngay khi trang được tải
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdowns = document.querySelectorAll('.status-dropdown');
+            dropdowns.forEach(dropdown => updateDropdownColor(dropdown));
+        });
+    </script>
+
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</body>
+</html>

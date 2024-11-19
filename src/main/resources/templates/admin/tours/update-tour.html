@@ -106,12 +106,6 @@
 
   <script>
     $(document).ready(function () {
-        $('#discountPercentage, #price').on('input', function () {
-            const price = parseFloat($('#price').val()) || 0;
-            const discount = parseFloat($('#discountPercentage').val()) || 0;
-            const finalPrice = price - (price * discount / 100);
-            $('#finalPrice').val(finalPrice > 0 ? Math.ceil(finalPrice).toLocaleString('en-US') : "0");
-        });
         $('#category').on('change', function () {
           const categoryId = $(this).val();
           if (categoryId) {
@@ -137,6 +131,12 @@
               $('#itemCategory').empty();
           }
       });
+      $('#discountPercentage, #price').on('input', function () {
+            const price = parseFloat($('#price').val()) || 0;
+            const discount = parseFloat($('#discountPercentage').val()) || 0;
+            const finalPrice = price - (price * discount / 100);
+            $('#finalPrice').val(finalPrice > 0 ? Math.ceil(finalPrice).toLocaleString('en-US') : "0");
+        });
   });
   </script>
 </section>

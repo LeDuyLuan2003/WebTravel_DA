@@ -4,7 +4,7 @@
       layout:decorate="~{layout}">
 <head>
   <meta charset="UTF-8">
-  <title>Product List</title>
+  <title>Tour List</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,7 +23,7 @@
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
 
-    <!-- Carousel Items -->
+    <!-- Carousel Items img-->
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="/uploads/caseroule1.jpg" class="d-block w-100" alt="Image 1">
@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <!-- Controls -->
+    <!-- Board Controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
@@ -60,9 +60,7 @@
   </div>
 
 
-
-
-  <div class="container">
+  <div class="container my-5">
     <div class="row">
       <div class="col-md-12">
         <h2>List <b>Tour</b></h2>
@@ -76,7 +74,49 @@
         </form>
       </div>
     </div>
+
+    <!-- Danh sách tour -->
+    <div class="row">
+      <div th:each="tour : ${tours}" class="col-md-4 mb-4">
+        <div class="card h-100">
+          <!-- Hình ảnh minh họa của tour -->
+          <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Tour Image" class="card-img-top">
+
+          <div class="card-body">
+            <!-- Tên tour -->
+            <h5 class="card-title" th:text="${tour.name}">Tên Tour</h5>
+
+            <!-- Đánh giá sao -->
+            <div class="star-rating">
+              <ul class="list-inline">
+                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+              </ul>
+            </div>
+
+            <!-- Thành phố (ItemCategory) -->
+            <p class="card-text text-muted" th:text="${tour.itemCategory.name}">Thành phố</p>
+
+            <!-- Giá sau khi giảm và giá gốc -->
+            <p class="tour-price">
+              <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">232.000 đ</span>
+              <span class="original-price" th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">290.000 đ</span>
+              <span class="discount-badge" th:if="${tour.discountPercentage > 0}" th:text="${tour.discountPercentage + '%'}">20%</span>
+            </p>
+
+            <!-- Nút xem chi tiết -->
+            <a th:href="@{'/detail/' + ${tour.id}}" class="btn btn-outline-primary w-100">Xem chi tiết</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+
+
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -55,3 +55,60 @@ h2::after {
     height: 100%;
     object-fit: cover;
 }
+
+
+.tour-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+.tour-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tour-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.tour-card .card-body {
+  padding: 15px;
+}
+
+.star-rating {
+  color: #FFD700; /* Màu vàng cho sao */
+  font-size: 1.2em;
+}
+
+.star-rating .fa-star,
+.star-rating .fa-star-o {
+  margin-right: 2px;
+}
+
+.tour-price {
+  font-size: 1.2em;
+  color: #f60;
+  font-weight: bold;
+}
+
+.original-price {
+  font-size: 0.9em;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.discount-badge {
+  background-color: #ff4c4c;
+  color: white;
+  padding: 2px 6px;
+  font-size: 0.9em;
+  border-radius: 4px;
+}
+
+
+
+

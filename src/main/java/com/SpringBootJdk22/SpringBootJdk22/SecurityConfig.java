@@ -1,4 +1,5 @@
 package com.SpringBootJdk22.SpringBootJdk22;
+
 import com.SpringBootJdk22.SpringBootJdk22.service.UserService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -36,27 +37,32 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/", "/oauth/**", "/register",
-                                            "/error","/","/uploads/**","/images/**","/detail/**")
-                        .permitAll() // Cho phép truy cập không cần xác thực.
-                        .requestMatchers( "/admin/**")
-                        .hasAnyAuthority("ADMIN") // Chỉ cho phép ADMIN truy cập.
-                        .anyRequest().authenticated() // Bất kỳ yêu cầu nào khác cần xác thực.
-
+                        .requestMatchers(
+                                "/css/**",
+                                "/js/**",
+                                "/oauth/**",
+                                "/error",
+                                "/",
+                                "/uploads/**",
+                                "/users/**",
+                                "/aboutUs/**",
+                                "/contact/**"
+                        ).permitAll()
+                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                        .anyRequest().authenticated()
                 )
-
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login") // Trang chuyển hướng sau khi đăng xuất.
-                        .deleteCookies("JSESSIONID") // Xóa cookie.
-                        .invalidateHttpSession(true) // Hủy phiên làm việc.
-                        .clearAuthentication(true) // Xóa xác thực.
+                        .logoutSuccessUrl("/login")
+                        .deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
                         .permitAll()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login") // Trang đăng nhập.
-                        .loginProcessingUrl("/login") // URL xử lý đăng nhập.
-                        .successHandler((request, response, authentication) -> { // Xử lý sau khi đăng nhập thành công.
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .successHandler((request, response, authentication) -> {
                             String redirectUrl = authentication.getAuthorities().stream()
                                     .map(grantedAuthority -> grantedAuthority.getAuthority())
                                     .filter(role -> role.equals("ADMIN") || role.equals("EMPLOYEE"))
@@ -65,25 +71,26 @@ public class SecurityConfig {
                                     .orElse("/");
                             response.sendRedirect(redirectUrl);
                         })
-                        .failureUrl("/login?error") // Trang đăng nhập thất bại.
+                        .failureUrl("/login?error")
                         .permitAll()
                 )
                 .rememberMe(rememberMe -> rememberMe
                         .key("hutech")
                         .rememberMeCookieName("hutech")
-                        .tokenValiditySeconds(24 * 60 * 60) // Thời gian nhớ đăng nhập.
+                        .tokenValiditySeconds(24 * 60 * 60)
                         .userDetailsService(userDetailsService())
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/403") // Trang báo lỗi khi truy cập không được phép.
+                        .accessDeniedPage("/403")
                 )
                 .sessionManagement(sessionManagement -> sessionManagement
-                        .maximumSessions(1) // Giới hạn số phiên đăng nhập.
-                        .expiredUrl("/login") // Trang khi phiên hết hạn.
+                        .maximumSessions(1)
+                        .expiredUrl("/login")
                 )
                 .httpBasic(httpBasic -> httpBasic
-                        .realmName("hutech") // Tên miền cho xác thực cơ bản.
+                        .realmName("hutech")
                 )
-                .build(); // Xây dựng và trả về chuỗi lọc bảo mật.
-    }
+                .build();
+
+}
 }

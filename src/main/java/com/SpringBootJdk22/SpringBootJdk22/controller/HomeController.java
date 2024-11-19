@@ -1,7 +1,11 @@
 package com.SpringBootJdk22.SpringBootJdk22.controller;
 
+import com.SpringBootJdk22.SpringBootJdk22.model.Contact;
+import com.SpringBootJdk22.SpringBootJdk22.model.ItemCategory;
 import com.SpringBootJdk22.SpringBootJdk22.model.Tour;
 import com.SpringBootJdk22.SpringBootJdk22.service.CategoryService;
+import com.SpringBootJdk22.SpringBootJdk22.service.ContactService;
+import com.SpringBootJdk22.SpringBootJdk22.service.ItemCategoryService;
 import com.SpringBootJdk22.SpringBootJdk22.service.TourService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +22,21 @@ public class HomeController {
     private TourService tourService;
     @Autowired
     private CategoryService categoryService; // Đảm bảo bạn đã inject CategoryService
+    @Autowired
+    private ContactService contactService;
+    @Autowired
+    private  ItemCategoryService itemCategoryService;
 
     @ModelAttribute
     public void addCategoriesToModel(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
     }
-
+    @GetMapping("itemCategory/byCategory/{categoryId}")
+    @ResponseBody
+    public List<ItemCategory> getItemCategoriesByCategory(@PathVariable("categoryId") Long categoryId) {
+        List<ItemCategory> itemCategories = itemCategoryService.findByCategoryId(categoryId);
+        return itemCategories;
+    }
     // Display a list of all products
     @GetMapping
     public String showProductList(Model model) {
@@ -53,10 +66,26 @@ public class HomeController {
     public String showVehicle(Model model) {
         return "/users/vehicle";
     }
+
     @GetMapping("/contact")
     public String showContact(Model model) {
+        model.addAttribute("contact", new Contact());
         return "/users/contact";
     }
+
+    @PostMapping("/contact")
+    public String sendContact(@ModelAttribute Contact contact, Model model) {
+        try {
+            contactService.saveContact(contact);
+            model.addAttribute("successMessage", "Your contact request has been sent successfully!");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "There was an error sending your contact request.");
+        }
+        return "redirect:/contact";
+    }
+
+
+
 
     //exception
     @RequestMapping("/403")

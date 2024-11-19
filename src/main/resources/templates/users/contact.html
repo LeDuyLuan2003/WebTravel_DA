@@ -44,25 +44,25 @@
 
         <div class="contact-form">
             <h1 class="contact-heading">Get in Touch with Us</h1>
-            <form action="/submit-contact" method="post">
+            <form th:action="@{/contact}" th:object="${contact}" method="post" >
                 <div class="mb-3" style="position: relative;">
-                    <input type="text" class="form-control" id="name" name="name" placeholder=" " required>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder=" " required>
                     <label for="name" class="form-label">Full Name</label>
                 </div>
                 <div class="mb-3" style="position: relative;">
-                    <input type="email" class="form-control" id="email" name="email" placeholder=" " required>
+                    <input type="email" class="form-control" id="email" th:field="*{email}" placeholder=" " required>
                     <label for="email" class="form-label">Email Address</label>
                 </div>
                 <div class="mb-3" style="position: relative;">
-                    <input type="tel" class="form-control" id="phone" name="phone" placeholder=" ">
+                    <input type="tel" class="form-control" id="phone" th:field="*{phone}" placeholder=" ">
                     <label for="phone" class="form-label">Phone Number</label>
                 </div>
                 <div class="mb-3" style="position: relative;">
-                    <input type="text" class="form-control" id="subject" name="subject" placeholder=" " required>
+                    <input type="text" class="form-control" id="subject" th:field="*{subject}" placeholder=" " required>
                     <label for="subject" class="form-label">Subject</label>
                 </div>
                 <div class="mb-3" style="position: relative;">
-                    <textarea class="form-control" id="message" name="message" rows="5" placeholder=" " required></textarea>
+                    <textarea class="form-control" id="message" th:field="*{message}" rows="5" placeholder=" " required></textarea>
                     <label for="message" class="form-label">Message</label>
                 </div>
                 <div class="d-flex justify-content-center">
