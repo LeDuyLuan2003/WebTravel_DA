@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,11 +113,21 @@ public class EmployeeController {
     }
 
     @GetMapping("/contact")
-    public String showContactList(Model model) {
-        List<Contact> contacts = contactService.getAllContacts();
+    public String showContactList(@RequestParam(required = false) String startDate,
+                                  @RequestParam(required = false) String endDate,
+                                  Model model) {
+        List<Contact> contacts;
+        if (startDate != null && endDate != null) {
+            LocalDateTime start = LocalDateTime.parse(startDate + "T00:00:00");
+            LocalDateTime end = LocalDateTime.parse(endDate + "T23:59:59");
+            contacts = contactService.getContactsByDateRange(start, end);
+        } else {
+            contacts = contactService.getAllContacts();
+        }
         model.addAttribute("contacts", contacts);
-        return "employee/contacts/list-contact"; // Tên file HTML để hiển thị danh sách
+        return "employee/contacts/list-contact";
     }
+
 
     @PostMapping("/contact/updateStatus")
     public String updateContactStatus(@RequestParam("contactId") Long contactId,
@@ -127,6 +138,10 @@ public class EmployeeController {
         contactService.saveContact(contact); // Lưu trạng thái mới vào DB
         return "redirect:/employee/contact"; // Quay lại trang danh sách
     }
+
+
+
+
 
 
     // Save file to "static/uploads"

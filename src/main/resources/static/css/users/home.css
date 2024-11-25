@@ -57,58 +57,69 @@ h2::after {
 }
 
 
+
+
+
+
+
+
 .tour-card {
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tour-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
 }
 
 .tour-card img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
+  border-bottom: 1px solid #ddd;
 }
 
 .tour-card .card-body {
   padding: 15px;
 }
 
-.star-rating {
-  color: #FFD700; /* Màu vàng cho sao */
+.star-rating i {
+  color: #ffc107;
   font-size: 1.2em;
-}
-
-.star-rating .fa-star,
-.star-rating .fa-star-o {
   margin-right: 2px;
 }
 
+.star-rating {
+  margin-bottom: 10px;
+}
+
 .tour-price {
-  font-size: 1.2em;
-  color: #f60;
+  font-size: 1.4em;
+  color: #ff5722;
   font-weight: bold;
 }
 
-.original-price {
-  font-size: 0.9em;
-  color: #999;
-  text-decoration: line-through;
-}
-
 .discount-badge {
-  background-color: #ff4c4c;
+  background-color: #e53935;
   color: white;
-  padding: 2px 6px;
+  padding: 5px 10px;
   font-size: 0.9em;
-  border-radius: 4px;
+  font-weight: bold;
+  border-radius: 12px;
+  display: inline-block;
 }
 
+.btn-outline-primary {
+  color: #007bff;
+  border: 2px solid #007bff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-
-
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: white;
+}

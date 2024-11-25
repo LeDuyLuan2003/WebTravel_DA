@@ -6,6 +6,7 @@ import com.SpringBootJdk22.SpringBootJdk22.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,8 @@ public class ContactService {
     }
     public Optional<Contact> getContactById(Long id) {
         return contactRepository.findById(id);
+    }
+    public List<Contact> getContactsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        return contactRepository.findAllByCreatedDateBetween(startDate, endDate);
     }
 }

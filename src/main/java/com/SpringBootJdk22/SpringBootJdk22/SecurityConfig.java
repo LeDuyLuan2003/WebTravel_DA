@@ -60,9 +60,9 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .successHandler((request, response, authentication) -> {
+                        .loginPage("/login") // Trang đăng nhập.
+                        .loginProcessingUrl("/login") // URL xử lý đăng nhập.
+                        .successHandler((request, response, authentication) -> { // Xử lý sau khi đăng nhập thành công.
                             String redirectUrl = authentication.getAuthorities().stream()
                                     .map(grantedAuthority -> grantedAuthority.getAuthority())
                                     .filter(role -> role.equals("ADMIN") || role.equals("EMPLOYEE"))
@@ -71,7 +71,7 @@ public class SecurityConfig {
                                     .orElse("/");
                             response.sendRedirect(redirectUrl);
                         })
-                        .failureUrl("/login?error")
+                        .failureUrl("/login?error") // Trang đăng nhập thất bại.
                         .permitAll()
                 )
                 .rememberMe(rememberMe -> rememberMe
