@@ -23,4 +23,17 @@ public class RoleService {
     public Optional<Role> findByName(String name) {
         return roleRepository.findByName(name);
     }
+
+    // Thêm vai trò nếu chưa tồn tại
+    public void addRoleIfNotExists(String roleName) {
+        Optional<Role> existingRole = roleRepository.findByName(roleName);
+        if (existingRole.isEmpty()) {
+            Role role = new Role();
+            role.setName(roleName);
+            roleRepository.save(role);
+            System.out.println("Added new role: " + roleName);
+        } else {
+            System.out.println("Role " + roleName + " already exists.");
+        }
+    }
 }

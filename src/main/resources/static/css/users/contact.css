@@ -1,6 +1,9 @@
 
         body {
-            background-color: #f3f4f6;
+            background-color: #F5F7FA;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+
         }
 
         .contact-container {

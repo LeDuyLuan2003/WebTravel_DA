@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 "/uploads/**",
                                 "/users/**",
                                 "/aboutUs/**",
-                                "/contact/**"
+                                "/contact/**",
+                                "/register/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()

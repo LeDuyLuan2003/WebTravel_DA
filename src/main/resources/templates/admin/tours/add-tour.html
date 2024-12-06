@@ -16,21 +16,21 @@
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>
       <input type="text" th:field="*{name}" class="form-control" id="name" required>
-      <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+      <div class="text-danger" id="nameError" style="display: none;">Vui lòng nhập tên tour</div>
     </div>
 
     <!-- Giá -->
     <div class="mb-3">
       <label for="price" class="form-label">Price:</label>
       <input type="number" th:field="*{price}" class="form-control" id="price" required>
-      <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+      <div class="text-danger" id="priceError" style="display: none;">Vui lòng nhập giá</div>
     </div>
 
     <!-- Phần trăm giảm giá -->
     <div class="mb-3">
       <label for="discountPercentage" class="form-label">Discount Percentage:</label>
-      <input type="number" th:field="*{discountPercentage}" class="form-control" id="discountPercentage" min="0" max="100" step="0.1">
-      <div class="text-danger" th:if="${#fields.hasErrors('discountPercentage')}" th:errors="*{discountPercentage}"></div>
+      <input type="number" th:field="*{discountPercentage}" class="form-control" id="discountPercentage" min="0" max="100" step="1">
+      <div class="text-danger" id="discountPercentageError" style="display: none;">Vui lòng nhập phần trăm giảm giá hợp lệ</div>
     </div>
 
     <!-- Giá sau khi giảm -->
@@ -46,7 +46,7 @@
         <option value="" selected>Vui lòng chọn category</option>
         <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
       </select>
-      <div class="text-danger" id="categoryError"></div>
+      <div class="text-danger" id="categoryError" style="display: none;">Vui lòng chọn category</div>
     </div>
 
     <!-- Chọn Item Category -->
@@ -55,20 +55,20 @@
       <select id="itemCategory" name="itemCategory" class="form-control" required>
         <option value="" selected>Vui lòng chọn item category</option>
       </select>
-      <div class="text-danger" id="itemCategoryError"></div>
+      <div class="text-danger" id="itemCategoryError" style="display: none;">Vui lòng chọn item category</div>
     </div>
 
     <!-- Mô tả Tour -->
     <div class="mb-3">
       <label for="description" class="form-label">Description:</label>
       <textarea th:field="*{description}" class="form-control" id="description" required></textarea>
-      <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+      <div class="text-danger" id="descriptionError" style="display: none;">Vui lòng nhập mô tả</div>
     </div>
 
     <!-- Avatar cho Tour -->
     <div class="mb-3">
       <label for="avatarFile" class="form-label">Avatar:</label>
-      <input type="file" name="avatarFile" class="form-control" id="avatarFile" required>
+      <input type="file" name="avatarFile" class="form-control" id="avatarFile">
     </div>
 
     <!-- Các ảnh bổ sung -->
@@ -86,18 +86,12 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
-      $('#discountPercentage, #price').on('input', function () {
-        const price = parseFloat($('#price').val()) || 0;
-        const discount = parseFloat($('#discountPercentage').val()) || 0;
-        const finalPrice = price - (price * discount / 100);
-        $('#finalPrice').val(finalPrice > 0 ? Math.ceil(finalPrice).toLocaleString('en-US') : "0");
-      });
-
+      // Xử lý tải danh sách Item Category dựa trên Category được chọn
       $('#category').on('change', function () {
         const categoryId = $(this).val();
         if (categoryId) {
           $.ajax({
-            url: '/admin/itemCategory/byCategory/' + categoryId,
+            url: '/itemCategory/byCategory/' + categoryId,
             type: "GET",
             dataType: "json",
             success: function (data) {
@@ -119,38 +113,70 @@
         }
       });
 
+      // Tự động tính toán giá sau khi giảm
+      $('#discountPercentage, #price').on('input', function () {
+        const price = parseFloat($('#price').val()) || 0;
+        const discount = parseFloat($('#discountPercentage').val()) || 0;
+        const finalPrice = price - (price * discount / 100);
+        $('#finalPrice').val(finalPrice > 0 ? Math.ceil(finalPrice) : "0");
+      });
+
+      // Xử lý kiểm tra các trường trước khi submit
       $('form').on('submit', function (e) {
         let isValid = true;
 
-        // Kiểm tra nếu Category trống
-        if (!$('#category').val()) {
-          $('#categoryError').text('Vui lòng chọn Category');
-          isValid = false;
-        } else {
-          $('#categoryError').text('');
-        }
+        // Kiểm tra trường Price
+          const price = parseFloat($('#price').val());
+          if (!price || price <= 0) { // Giá phải lớn hơn 0
+              $('#priceError').text('Vui lòng nhập giá hợp lệ lớn hơn 0').show();
+              isValid = false;
+          } else {
+              $('#priceError').hide();
+          }
 
-        // Kiểm tra nếu ItemCategory trống
-        if (!$('#itemCategory').val()) {
-          $('#itemCategoryError').text('Vui lòng chọn Item Category');
-          isValid = false;
-        } else {
-          $('#itemCategoryError').text('');
-        }
+          // Kiểm tra trường Discount Percentage
+          const discountPercentage = parseFloat($('#discountPercentage').val());
+          if (isNaN(discountPercentage) || discountPercentage < 0 || discountPercentage > 100) { // Giá trị giảm giá phải từ 0-100
+              $('#discountPercentageError').text('Vui lòng nhập phần trăm giảm giá từ 0 đến 100').show();
+              isValid = false;
+          } else {
+              $('#discountPercentageError').hide();
+          }
 
-        // Kiểm tra nếu Name trống
+        // Kiểm tra trường Name
         if (!$('#name').val()) {
-          alert('Vui lòng nhập Tên Tour');
+          $('#nameError').show();
           isValid = false;
+        } else {
+          $('#nameError').hide();
         }
 
-        // Kiểm tra nếu Price trống
-        if (!$('#price').val()) {
-          alert('Vui lòng nhập Giá');
+        // Kiểm tra trường Category
+        if (!$('#category').val()) {
+          $('#categoryError').show();
           isValid = false;
+        } else {
+          $('#categoryError').hide();
         }
 
-        if (!isValid) e.preventDefault(); // Ngăn chặn gửi form nếu có lỗi
+        // Kiểm tra trường Item Category
+        if (!$('#itemCategory').val()) {
+          $('#itemCategoryError').show();
+          isValid = false;
+        } else {
+          $('#itemCategoryError').hide();
+        }
+
+        // Kiểm tra trường Description
+        if (!$('#description').val()) {
+          $('#descriptionError').show();
+          isValid = false;
+        } else {
+          $('#descriptionError').hide();
+        }
+
+        // Ngăn gửi form nếu có lỗi
+        if (!isValid) e.preventDefault();
       });
     });
   </script>

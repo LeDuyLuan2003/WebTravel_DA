@@ -54,6 +54,8 @@ public class TourController {
                              @RequestParam("imageFiles") MultipartFile[] imageFiles,
                              Model model) {
         if (result.hasErrors()) {
+            System.out.println("price từ form khi add: " + tour.getPrice());
+            System.out.println("finalprice từ form khi add: " + tour.getFinalPrice());
             model.addAttribute("categories", categoryService.getAllCategories());
             return "/admin/tours/add-tour";
         }
@@ -163,7 +165,8 @@ public class TourController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        System.out.println("price từ form khi update: " + tour.getPrice());
+        System.out.println("finalprice từ form khi update: " + tour.getFinalPrice());
         return "redirect:/admin/tour";
     }
 

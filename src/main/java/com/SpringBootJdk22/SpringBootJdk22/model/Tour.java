@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.format.annotation.NumberFormat;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Setter
@@ -18,15 +19,15 @@ public class Tour {
     private Long id;
 
     @NotBlank(message = "Name is required")
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci")
     private String name;
 
-    @NumberFormat(pattern = "#,###")
-    private double price;
+    private long price;
 
     @Lob
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT CHARACTER SET utf8 COLLATE utf8_general_ci")
     private String description;
-
+    @Column(columnDefinition = "TEXT CHARACTER SET utf8 COLLATE utf8_general_ci")
     private String avatar;
 
     @ManyToOne
@@ -36,19 +37,18 @@ public class Tour {
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
 
-    private double discountPercentage; // Phần trăm giảm giá
-    @NumberFormat(pattern = "#,###")
-    private double finalPrice; // Giá sau khi giảm (lưu trực tiếp vào DB)
+    private long discountPercentage;
+    private long finalPrice;
 
-    // Tính giá sau giảm giá
     @PrePersist
     @PreUpdate
     public void calculateFinalPrice() {
         if (discountPercentage > 0) {
             finalPrice = price - (price * discountPercentage / 100);
         } else {
-            finalPrice = price; // Nếu không có giảm giá, giữ nguyên giá gốc
+            finalPrice = price;
         }
-        finalPrice = Math.max(finalPrice, 0); // Đảm bảo giá không âm
+        finalPrice = Math.max(finalPrice, 0);
     }
 }
+

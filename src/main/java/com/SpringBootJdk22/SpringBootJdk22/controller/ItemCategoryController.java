@@ -38,12 +38,7 @@ public class ItemCategoryController {
         return "admin/itemCategories/itemCategory-list";  // Trả về view để hiển thị ItemCategory theo Category
     }
 
-    @GetMapping("/byCategory/{categoryId}")
-    @ResponseBody
-    public List<ItemCategory> getItemCategoriesByCategory(@PathVariable("categoryId") Long categoryId) {
-        List<ItemCategory> itemCategories = itemCategoryService.findByCategoryId(categoryId);
-        return itemCategories;
-    }
+
 
     // Hiển thị form thêm ItemCategory
     @GetMapping("/add")

@@ -1,7 +1,7 @@
 /* General styles */
 body {
     background-color: #F5F7FA;
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 h2 {
@@ -49,7 +49,6 @@ h2::after {
 .carousel-item {
     height: 500px; /* Chiều cao bạn muốn cho carousel */
 }
-
 .carousel-item img {
     width: 100%;
     height: 100%;
@@ -60,66 +59,82 @@ h2::after {
 
 
 
-
-
-
 .tour-card {
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 15px; /* Giảm khoảng cách giữa các thẻ */
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column; /* Xếp các thành phần theo chiều dọc */
+  height: 100%;
 }
 
 .tour-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tour-card img {
   width: 100%;
-  height: 220px;
+  height: 180px; /* Cố định chiều cao ảnh */
   object-fit: cover;
-  border-bottom: 1px solid #ddd;
 }
 
 .tour-card .card-body {
-  padding: 15px;
+  padding: 10px; /* Giảm khoảng cách bên trong card */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Dàn đều nội dung */
+  flex-grow: 1;
 }
 
-.star-rating i {
-  color: #ffc107;
-  font-size: 1.2em;
-  margin-right: 2px;
+.card-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px; /* Giảm khoảng cách dưới */
+  min-height: 40px; /* Cố định chiều cao để đồng nhất */
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
 }
 
 .star-rating {
-  margin-bottom: 10px;
+  color: #FFD700;
+  font-size: 1em;
+  margin-bottom: 5px; /* Giảm khoảng cách dưới */
+}
+
+.card-text {
+  color: #666;
+  font-size: 0.9em;
+  margin-bottom: 5px; /* Giảm khoảng cách dưới */
+  min-height: 30px; /* Cố định chiều cao */
+  display: flex;
+  align-items: center;
 }
 
 .tour-price {
-  font-size: 1.4em;
-  color: #ff5722;
+  font-size: 1em; /* Giảm kích thước font */
+  color: #f60;
   font-weight: bold;
+  margin-bottom: 5px; /* Giảm khoảng cách dưới */
+}
+
+.original-price {
+  font-size: 0.85em; /* Giảm kích thước font */
+  color: #999;
+  text-decoration: line-through;
 }
 
 .discount-badge {
-  background-color: #e53935;
+  background-color: #ff4c4c;
   color: white;
-  padding: 5px 10px;
-  font-size: 0.9em;
-  font-weight: bold;
-  border-radius: 12px;
-  display: inline-block;
+  padding: 2px 4px; /* Giảm padding */
+  font-size: 0.9em; /* Giảm kích thước font */
+  border-radius: 4px;
 }
 
-.btn-outline-primary {
-  color: #007bff;
-  border: 2px solid #007bff;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.btn-outline-primary:hover {
-  background-color: #007bff;
-  color: white;
+.btn {
+  margin-top: 10px; /* Giảm khoảng cách trên */
+  font-size: 0.9em; /* Giảm kích thước nút */
 }

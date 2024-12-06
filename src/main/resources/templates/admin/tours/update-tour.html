@@ -29,7 +29,7 @@
     <!-- Phần trăm giảm giá -->
     <div class="mb-3">
       <label for="discountPercentage" class="form-label">Discount Percentage:</label>
-      <input type="number" th:field="*{discountPercentage}" class="form-control" id="discountPercentage" min="0" max="100" step="0.1">
+      <input type="number" th:field="*{discountPercentage}" class="form-control" id="discountPercentage" min="0" max="100" step="1">
       <div class="text-danger" th:if="${#fields.hasErrors('discountPercentage')}" th:errors="*{discountPercentage}"></div>
     </div>
 
@@ -110,7 +110,7 @@
           const categoryId = $(this).val();
           if (categoryId) {
               $.ajax({
-                  url: '/admin/itemCategory/byCategory/' + categoryId,
+                  url: '/itemCategory/byCategory/' + categoryId,
                   type: "GET",
                   dataType: "json",
                   success: function (data) {
@@ -135,7 +135,7 @@
             const price = parseFloat($('#price').val()) || 0;
             const discount = parseFloat($('#discountPercentage').val()) || 0;
             const finalPrice = price - (price * discount / 100);
-            $('#finalPrice').val(finalPrice > 0 ? Math.ceil(finalPrice).toLocaleString('en-US') : "0");
+            $('#finalPrice').val(finalPrice > 0 ? Math.ceil(finalPrice) : "0");
         });
   });
   </script>

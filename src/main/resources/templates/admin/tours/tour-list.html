@@ -32,7 +32,7 @@
       <tr th:each="tour : ${tours}">
         <td th:text="${tour.id}">1</td>
         <td th:text="${tour.name}">Tour Name</td>
-        <td th:text="${tour.price}">100.00</td>
+        <td th:text="${tour.finalPrice}">100.00</td>
         <td th:text="${tour.itemCategory.name}">Item Category</td> <!-- Hiển thị tên của ItemCategory -->
         <td>
           <a class="btn btn-info btn-sm" th:href="@{/admin/tour/detail/{id}(id=${tour.id})}">Details</a>

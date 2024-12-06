@@ -13,7 +13,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(columnDefinition = "TEXT CHARACTER SET utf8 COLLATE utf8_general_ci")
     private String url;
 
     @ManyToOne
