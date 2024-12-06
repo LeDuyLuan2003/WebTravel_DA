@@ -1,12 +1,16 @@
 package com.SpringBootJdk22.SpringBootJdk22.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,5 +30,9 @@ public class ItemCategory {
     @JoinColumn(name = "category_id")
     @JsonBackReference
     private Category category;
+
+    @OneToMany(mappedBy = "itemCategory")
+    @JsonIgnore // Bỏ qua khi tuần tự hóa ItemCategory sang JSON
+    private List<Tour> tours;
 }
 

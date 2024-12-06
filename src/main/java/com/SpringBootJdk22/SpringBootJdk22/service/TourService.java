@@ -1,6 +1,7 @@
 package com.SpringBootJdk22.SpringBootJdk22.service;
 
 import com.SpringBootJdk22.SpringBootJdk22.model.Image;
+import com.SpringBootJdk22.SpringBootJdk22.model.ItemCategory;
 import com.SpringBootJdk22.SpringBootJdk22.model.Tour;
 import com.SpringBootJdk22.SpringBootJdk22.repository.ImageRepository;
 import com.SpringBootJdk22.SpringBootJdk22.repository.TourRepository;
@@ -34,6 +35,10 @@ public class TourService {
         return tourRepository.findByNameContainingIgnoreCase(name);
     }
 
+    // Find tours by item category
+    public List<Tour> findByItemCategory(ItemCategory itemCategory) {
+        return tourRepository.findByItemCategory(itemCategory);
+    }
     // Add a new product to the database
     public Tour addProduct(Tour tour) {
         return tourRepository.save(tour);

@@ -75,48 +75,53 @@
       </div>
     </div>
 
-    <!-- Danh sách tour -->
+    <!-- Tour List Section -->
+
     <div class="row">
-      <div th:each="tour : ${tours}" class="col-md-4 mb-4">
-        <div class="card h-100 tour-card">
-          <!-- Hình ảnh minh họa của tour -->
-          <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Tour Image" class="card-img-top">
+      <div th:each="category : ${categories}">
+        <!-- Display category name -->
+        <h2 class="my-4" th:text="${category.name}">Category Name</h2>
 
-          <div class="card-body">
-            <!-- Tên tour -->
-            <h5 class="card-title" th:text="${tour.name}">Tên Tour</h5>
+        <!-- Duyệt qua các itemCategories trong mỗi category -->
+        <div th:each="itemCategory : ${category.itemCategories}">
+          <!-- Duyệt qua các tours của itemCategory -->
+          <div th:each="tour : ${itemCategory.tours}" class="col-md-4 mb-4">
+            <div class="card h-100 tour-card">
+              <!-- Tour image -->
+              <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Tour Image" class="card-img-top">
 
-            <!-- Đánh giá sao -->
-            <div class="star-rating">
-              <ul class="list-inline">
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-              </ul>
+              <div class="card-body">
+                <!-- Tour name -->
+                <h5 class="card-title" th:text="${tour.name}">Tour Name</h5>
+
+                <!-- Rating -->
+                <div class="star-rating">
+                  <ul class="list-inline">
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                  </ul>
+                </div>
+
+                <!-- ItemCategory (City) -->
+                <p class="card-text text-muted" th:text="${tour.itemCategory.name}">City</p>
+
+                <!-- Price after discount and original price -->
+                <p class="tour-price">
+                  <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">232.000 đ</span>
+                  <span class="original-price" th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">250.000 đ</span>
+                </p>
+                <!-- Nút xem chi tiết -->
+                <a th:href="@{'/tour/' + ${tour.id}}" class="btn btn-primary">Xem Chi Tiết</a>
+              </div>
             </div>
-
-            <!-- Thành phố (ItemCategory) -->
-            <p class="card-text text-muted" th:text="${tour.itemCategory.name}">Thành phố</p>
-
-            <!-- Giá sau khi giảm và giá gốc -->
-            <p class="tour-price">
-              <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">232.000 đ</span>
-              <span class="original-price" th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">290.000 đ</span>
-              <span class="discount-badge" th:if="${tour.discountPercentage > 0}" th:text="${tour.discountPercentage + '%'}">20%</span>
-            </p>
-
-            <!-- Nút xem chi tiết -->
-            <a th:href="@{'/detail/' + ${tour.id}}" class="btn btn-outline-primary w-100">Xem chi tiết</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-
-
 
 </section>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

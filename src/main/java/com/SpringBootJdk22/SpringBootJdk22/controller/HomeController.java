@@ -1,5 +1,6 @@
 package com.SpringBootJdk22.SpringBootJdk22.controller;
 
+import com.SpringBootJdk22.SpringBootJdk22.model.Category;
 import com.SpringBootJdk22.SpringBootJdk22.model.Contact;
 import com.SpringBootJdk22.SpringBootJdk22.model.ItemCategory;
 import com.SpringBootJdk22.SpringBootJdk22.model.Tour;
@@ -39,8 +40,21 @@ public class HomeController {
     }
     // Display a list of all products
     @GetMapping
-    public String showProductList(Model model) {
-        model.addAttribute("tours", tourService.getAllProducts());
+    public String showTours(Model model) {
+        // Lấy tất cả các category từ database
+        List<Category> categories = categoryService.getAllCategories();
+
+        // Duyệt qua mỗi category để lấy các tours thuộc itemCategory của nó
+        for (Category category : categories) {
+            for (ItemCategory itemCategory : category.getItemCategories()) {
+                // Lọc các tour thuộc itemCategory này
+                List<Tour> tours = tourService.findByItemCategory(itemCategory);
+                itemCategory.setTours(tours); // Set list tours vào itemCategory (nếu cần)
+            }
+        }
+
+        // Gửi danh sách categories và tours vào view
+        model.addAttribute("categories", categories);
         return "/users/home";
     }
     @GetMapping("/search")
