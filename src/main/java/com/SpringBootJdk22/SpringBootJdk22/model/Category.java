@@ -24,4 +24,9 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<ItemCategory> itemCategories;
+
+    // Thuộc tính tiện ích, không ánh xạ với DB
+    @Transient
+    private List<Tour> allTours;
+
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -41,19 +42,17 @@ public class HomeController {
     // Display a list of all products
     @GetMapping
     public String showTours(Model model) {
-        // Lấy tất cả các category từ database
         List<Category> categories = categoryService.getAllCategories();
 
-        // Duyệt qua mỗi category để lấy các tours thuộc itemCategory của nó
         for (Category category : categories) {
+            List<Tour> allTours = new ArrayList<>();
             for (ItemCategory itemCategory : category.getItemCategories()) {
-                // Lọc các tour thuộc itemCategory này
                 List<Tour> tours = tourService.findByItemCategory(itemCategory);
-                itemCategory.setTours(tours); // Set list tours vào itemCategory (nếu cần)
+                allTours.addAll(tours);
             }
+            category.setAllTours(allTours); // Tạo getter/setter mới cho `allTours` trong `Category`.
         }
 
-        // Gửi danh sách categories và tours vào view
         model.addAttribute("categories", categories);
         return "/users/home";
     }

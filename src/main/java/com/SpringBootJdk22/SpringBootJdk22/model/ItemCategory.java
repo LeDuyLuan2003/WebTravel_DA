@@ -31,7 +31,7 @@ public class ItemCategory {
     @JsonBackReference
     private Category category;
 
-    @OneToMany(mappedBy = "itemCategory")
+    @OneToMany(mappedBy = "itemCategory", cascade = CascadeType.ALL)
     @JsonIgnore // Bỏ qua khi tuần tự hóa ItemCategory sang JSON
     private List<Tour> tours;
 }

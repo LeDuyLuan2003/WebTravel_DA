@@ -1,12 +1,14 @@
 package com.SpringBootJdk22.SpringBootJdk22.service;
 
 import com.SpringBootJdk22.SpringBootJdk22.model.Category;
+import com.SpringBootJdk22.SpringBootJdk22.model.Tour;
 import com.SpringBootJdk22.SpringBootJdk22.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -41,4 +43,22 @@ public class CategoryService {
         }
         categoryRepository.deleteById(id);
     }
+
+    public List<Category> getAllCategoriesWithTours() {
+        // Lấy tất cả categories
+        List<Category> categories = categoryRepository.findAll();
+
+        // Duyệt qua từng category để gán danh sách allTours
+        categories.forEach(category -> {
+            List<Tour> allTours = new ArrayList<>();
+            category.getItemCategories().forEach(itemCategory -> {
+                allTours.addAll(itemCategory.getTours());
+            });
+            category.setAllTours(allTours); // Gán danh sách tour vào trường @Transient
+        });
+
+        return categories;
+    }
+
+
 }
