@@ -23,7 +23,7 @@ public class ItemCategory {
     private Long id;
 
     @NotBlank(message = "Name is required")
-    @Column(nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci")
+    @Column(nullable = false, columnDefinition = "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci")
     private String name;
 
     @ManyToOne

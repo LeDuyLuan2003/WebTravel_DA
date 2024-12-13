@@ -84,44 +84,51 @@
 
     <!-- Tour List Section -->
 
-    <div class="row">
-        <div th:each="category : ${categories}">
-          <h2 class="my-4" th:text="${category.name}">Tên Danh Mục</h2>
+    <div class="row" th:each="category : ${categories}">
+      <h2 class="my-4" th:text="${category.name}">Category Name</h2>
 
-          <!-- Carousel Wrapper -->
-          <div id="carousel-category-[[${category.id}]]" class="carousel slide" data-bs-ride="carousel">
-            <!-- Indicators -->
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carousel-category-[[${category.id}]]" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button th:each="tour, stat : ${category.allTours}"
-                      th:if="${stat.index > 0}"
-                      type="button"
-                      th:attr="data-bs-slide-to=${stat.index}"
-                      aria-label="Slide [[${stat.index + 1}]]">
-              </button>
-            </div>
-
-            <!-- Carousel Items -->
-            <div class="carousel-inner">
-              <div th:each="tour, stat : ${category.allTours}"
-                   th:classappend="${stat.index == 0} ? 'active' : ''"
-                   class="carousel-item">
-                <div class="card h-100 mx-auto" style="max-width: 18rem;">
-                  <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Hình Ảnh" class="card-img-top">
+      <!-- Carousel for Each Category -->
+      <div id="carousel-category-[[${category.id}]]" class="carousel slide" data-bs-ride="carousel">
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+          <div th:each="partitionedList, stat : ${category.partitionedTours}"
+               th:classappend="${stat.index == 0} ? 'active' : ''" class="carousel-item">
+            <div class="row">
+              <div th:each="tour : ${partitionedList}" class="col-md-4">
+                <div class="card h-100">
+                  <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Tour Image" class="card-img-top">
                   <div class="card-body">
-                    <h5 class="card-title" th:text="${tour.name}">Tên Tour</h5>
-                    <p th:text="${tour.itemCategory.name}">Thành Phố</p>
-                    <p class="tour-price">
-                      <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">0 đ</span>
-                      <span class="original-price" th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">0 đ</span>
+                    <h5 class="card-title">
+                      <span th:text="${tour.name}">Tour Name</span>
+                    </h5>
+                    <div class="star-rating">
+                      <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                      </ul>
+                    </div>
+                    <p class="card-text">
+                      <i class="fas fa-map-marker-alt"></i> <!-- Icon trước tên thành phố -->
+                      <span th:text="${tour.itemCategory.name}">City Name</span>
                     </p>
-                    <a th:href="@{'/detail/' + ${tour.id}}" class="btn btn-primary">Xem Chi Tiết</a>
+                    <p class="tour-price">
+                      <i class="fas fa-tag"></i> <!-- Icon trước giá -->
+                      <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">0</span>
+                      <span class="original-price" th:if="${tour.discountPercentage > 0}">
+                        <i class="fas fa-money-bill"></i> <!-- Icon trước giá gốc -->
+                        <span th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">0</span>
+                      </span>
+                      <span class="discount-badge" th:if="${tour.discountPercentage > 0}" th:text="${tour.discountPercentage + '%'}">20%</span>
+                    </p>
+                    <a th:href="@{'/detail/' + ${tour.id}}" class="btn btn-primary">Details</a>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Controls -->
+            <!-- Carousel Controls -->
             <button class="carousel-control-prev" type="button" th:attr="data-bs-target='#carousel-category-[[${category.id}]]'" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
@@ -133,6 +140,7 @@
           </div>
         </div>
       </div>
+    </div>
   </div>
 
 </section>

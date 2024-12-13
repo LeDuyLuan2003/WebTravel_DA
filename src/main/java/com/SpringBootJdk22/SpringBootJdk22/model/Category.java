@@ -18,7 +18,7 @@ public class Category {
     private Long id;
 
     @NotBlank(message = "Name is required")
-    @Column(nullable = false, columnDefinition = "VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci")
+    @Column(nullable = false, columnDefinition = "VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_general_ci")
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
@@ -28,5 +28,7 @@ public class Category {
     // Thuộc tính tiện ích, không ánh xạ với DB
     @Transient
     private List<Tour> allTours;
+    @Transient
+    private List<List<Tour>> partitionedTours;
 
 }

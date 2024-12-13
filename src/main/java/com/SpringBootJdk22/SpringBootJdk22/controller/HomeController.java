@@ -45,17 +45,44 @@ public class HomeController {
         List<Category> categories = categoryService.getAllCategories();
 
         for (Category category : categories) {
+            // Lấy tất cả các tour
             List<Tour> allTours = new ArrayList<>();
             for (ItemCategory itemCategory : category.getItemCategories()) {
                 List<Tour> tours = tourService.findByItemCategory(itemCategory);
                 allTours.addAll(tours);
             }
-            category.setAllTours(allTours); // Tạo getter/setter mới cho `allTours` trong `Category`.
+
+            // Tính toán số tour chia hết cho 3
+            int mod = allTours.size() % 3;
+            if (mod != 0) {
+                allTours = allTours.subList(0, allTours.size() - mod); // Loại bỏ phần dư
+            }
+
+            // Phân chia các tour thành các nhóm 3
+            List<List<Tour>> partitionedTours = new ArrayList<>();
+            for (int i = 0; i < allTours.size(); i += 3) {
+                partitionedTours.add(allTours.subList(i, Math.min(i + 3, allTours.size())));
+            }
+
+            // Gán danh sách đã xử lý vào category
+            category.setAllTours(allTours);
+            category.setPartitionedTours(partitionedTours);
         }
 
         model.addAttribute("categories", categories);
         return "/users/home";
     }
+
+
+    // Hàm tiện ích để chia danh sách thành các nhóm nhỏ
+    private <T> List<List<T>> partitionList(List<T> list, int size) {
+        List<List<T>> partitions = new ArrayList<>();
+        for (int i = 0; i < list.size(); i += size) {
+            partitions.add(list.subList(i, Math.min(i + size, list.size())));
+        }
+        return partitions;
+    }
+
     @GetMapping("/search")
     public String searchProductsByName(@RequestParam("name") String name, Model model) {
         List<Tour> searchResults = tourService.findProductsByName(name);

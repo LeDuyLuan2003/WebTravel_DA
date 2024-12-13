@@ -39,7 +39,6 @@ public class Tour {
 
     private long discountPercentage;
     private long finalPrice;
-
     @PrePersist
     @PreUpdate
     public void calculateFinalPrice() {

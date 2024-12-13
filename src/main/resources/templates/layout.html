@@ -94,7 +94,6 @@
             background-color: #ff0000; /* YouTube */
         }
 
-
     </style>
 </head>
 <body>
@@ -136,17 +135,23 @@
                 </li>
 
             </ul>
+
+<!--            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">-->
+<!--                <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">-->
+<!--                    <span class="navbar-text text-dark">Account: <span sec:authentication="name"></span></span>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--                    <form th:action="@{/logout}" method="post">-->
+<!--                        <button class="btn btn-outline-dark" type="submit">Logout</button>-->
+<!--                    </form>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="!isAuthenticated()">-->
+<!--                    <a class="btn btn-outline-dark" href="/login">Login</a>-->
+<!--                </li>-->
+<!--            </ul>-->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
-                    <span class="navbar-text text-dark">Account: <span sec:authentication="name"></span></span>
-                </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <form th:action="@{/logout}" method="post">
-                        <button class="btn btn-outline-dark" type="submit">Logout</button>
-                    </form>
-                </li>
-                <li class="nav-item" sec:authorize="!isAuthenticated()">
-                    <a class="btn btn-outline-dark" href="/login">Login</a>
+                <li class="nav-item">
+                    <div class="google-translate-element"></div>
                 </li>
             </ul>
         </div>
@@ -184,6 +189,23 @@
     })();
 </script>
 <!--End of Tawk.to Script-->
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        // Tìm phần tử có class 'google-translate-element' và thêm id 'google_translate_element'
+        const translateElement = document.querySelector('.google-translate-element');
+        if (translateElement) {
+            translateElement.id = 'google_translate_element'; // Thêm id tạm
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,vi',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 
 <footer>

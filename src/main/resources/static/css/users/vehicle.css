@@ -60,3 +60,23 @@ header p {
 .vehicle-item p {
     font-size: 1rem;
 }
+
+
+.get-in-touch {
+    background-color: #007bff; /* Đổi mã màu này thành màu bạn mong muốn */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.get-in-touch a {
+    color: white;
+    background-color: #6c757d; /* Điều chỉnh lại màu nút để dễ nhìn */
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.get-in-touch a:hover {
+    background-color: #5a6268; /* Màu nút khi hover */
+}
