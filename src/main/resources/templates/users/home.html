@@ -76,7 +76,7 @@
         <form th:action="@{/search}" method="get" class="mb-3">
           <div class="input-group">
             <input type="text" name="name" class="form-control" placeholder="Search by name...">
-            <button type="submit" class="btn btn-primary">Search</button>
+
           </div>
         </form>
       </div>
@@ -95,7 +95,8 @@
                th:classappend="${stat.index == 0} ? 'active' : ''" class="carousel-item">
             <div class="row">
               <div th:each="tour : ${partitionedList}" class="col-md-4">
-                <div class="card h-100">
+                <!-- Anchor tag wrapping the entire card -->
+                <a th:href="@{'/detail/' + ${tour.id}}" class="card h-100 text-decoration-none text-dark">
                   <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Tour Image" class="card-img-top">
                   <div class="card-body">
                     <h5 class="card-title">
@@ -118,14 +119,13 @@
                       <i class="fas fa-tag"></i> <!-- Icon trước giá -->
                       <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">0</span>
                       <span class="original-price" th:if="${tour.discountPercentage > 0}">
-                        <i class="fas fa-money-bill"></i> <!-- Icon trước giá gốc -->
-                        <span th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">0</span>
-                      </span>
+                    <i class="fas fa-money-bill"></i> <!-- Icon trước giá gốc -->
+                    <span th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">0</span>
+                </span>
                       <span class="discount-badge" th:if="${tour.discountPercentage > 0}" th:text="${tour.discountPercentage + '%'}">20%</span>
                     </p>
-                    <a th:href="@{'/detail/' + ${tour.id}}" class="btn btn-primary">Details</a>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
             <!-- Carousel Controls -->

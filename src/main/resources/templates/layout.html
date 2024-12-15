@@ -108,14 +108,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tours</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li th:each="category : ${categories}">
-                            <a th:href="@{/tours/category/{id}(id=${category.id})}" class="dropdown-item" th:text="${category.name}">Category Name</a>
-                        </li>
-                    </ul>
-                </li>
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tours</a>-->
+<!--                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                        <li th:each="category : ${categories}">-->
+<!--                            <a th:href="@{/tours/category/{id}(id=${category.id})}" class="dropdown-item" th:text="${category.name}">Category Name</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </li>-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
                     <ul class="dropdown-menu" aria-labelledby="servicesDropdown">

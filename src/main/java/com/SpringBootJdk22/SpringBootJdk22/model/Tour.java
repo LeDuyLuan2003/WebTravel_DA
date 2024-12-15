@@ -23,7 +23,7 @@ public class Tour {
     private String name;
 
     private long price;
-
+    private int person;
     @Lob
     @Column(columnDefinition = "TEXT CHARACTER SET utf8 COLLATE utf8_general_ci")
     private String description;
@@ -37,6 +37,9 @@ public class Tour {
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
 
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TourSchedule> schedules; // Thêm quan hệ với TourSchedule
+
     private long discountPercentage;
     private long finalPrice;
     @PrePersist
@@ -49,5 +52,6 @@ public class Tour {
         }
         finalPrice = Math.max(finalPrice, 0);
     }
+
 }
 

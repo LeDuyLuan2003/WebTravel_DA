@@ -124,6 +124,10 @@ public class HomeController {
         return "redirect:/contact";
     }
 
+    @GetMapping("/blog")
+    public String showBlog(Model model) {
+        return "/users/blog";
+    }
 
 
 

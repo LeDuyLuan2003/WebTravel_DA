@@ -12,7 +12,16 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/layout-admin.css}">
+    <style>
+        .logo-circle {
+    border-radius: 50%; /* Tạo hình tròn */
+    width: 100px; /* Kích thước hình ảnh (tùy chỉnh theo yêu cầu) */
+    height: 100px; /* Đảm bảo hình ảnh giữ tỷ lệ hình tròn */
+    object-fit: cover; /* Cắt hình ảnh nếu cần để vừa khung tròn */
+}
+    </style>
 </head>
+
 <body>
 <div class="wrapper">
     <!-- Sidebar -->
@@ -21,7 +30,9 @@
             <div class="logo">
                 <a th:href="@{/admin}" class="simple-text">
                     <img th:src="@{/uploads/amazingLogo.jpg}"
-                         alt="VIETNAM AMAZING LOGO" style="width: 100%; height: auto;display: block;">
+                         alt="VIETNAM AMAZING LOGO"
+                         class="logo-circle"
+                         style="width: 100%; height: auto; display: block;">
                 </a>
             </div>
             <ul class="nav">
@@ -50,7 +61,7 @@
                         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                     </form>
                     <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <p>Đăng xuất</p>
+                        <p>Log out</p>
                     </a>
                 </li>
             </ul>
