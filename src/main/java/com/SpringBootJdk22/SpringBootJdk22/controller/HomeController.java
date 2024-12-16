@@ -1,13 +1,8 @@
 package com.SpringBootJdk22.SpringBootJdk22.controller;
 
-import com.SpringBootJdk22.SpringBootJdk22.model.Category;
-import com.SpringBootJdk22.SpringBootJdk22.model.Contact;
-import com.SpringBootJdk22.SpringBootJdk22.model.ItemCategory;
-import com.SpringBootJdk22.SpringBootJdk22.model.Tour;
-import com.SpringBootJdk22.SpringBootJdk22.service.CategoryService;
-import com.SpringBootJdk22.SpringBootJdk22.service.ContactService;
-import com.SpringBootJdk22.SpringBootJdk22.service.ItemCategoryService;
-import com.SpringBootJdk22.SpringBootJdk22.service.TourService;
+import com.SpringBootJdk22.SpringBootJdk22.model.*;
+import com.SpringBootJdk22.SpringBootJdk22.repository.TourScheduleRepository;
+import com.SpringBootJdk22.SpringBootJdk22.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +23,11 @@ public class HomeController {
     private ContactService contactService;
     @Autowired
     private  ItemCategoryService itemCategoryService;
+    @Autowired
+    private BookingService bookingService;
 
+    @Autowired
+    private TourScheduleRepository tourScheduleRepository;
     @ModelAttribute
     public void addCategoriesToModel(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -85,7 +84,7 @@ public class HomeController {
 
     @GetMapping("/search")
     public String searchProductsByName(@RequestParam("name") String name, Model model) {
-        List<Tour> searchResults = tourService.findProductsByName(name);
+        List<Tour> searchResults = tourService.findToursByName(name);
         model.addAttribute("tours", searchResults);
         return "/users/home"; // Template dùng cho người dùng
     }
@@ -93,7 +92,7 @@ public class HomeController {
 
     @GetMapping("/detail/{id}")
     public String showProductDetail(@PathVariable Long id, Model model) {
-        Tour tour = tourService.getProductById(id)
+        Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
         return "/users/tour-detail";
@@ -128,6 +127,22 @@ public class HomeController {
     public String showBlog(Model model) {
         return "/users/blog";
     }
+
+    @GetMapping("/booking")
+    public String showBookingForm(Model model) {
+        // Gửi danh sách tour và lịch trình đến view
+        model.addAttribute("tours", tourScheduleRepository.findAll());
+        model.addAttribute("booking", new Booking());
+        return "booking-form";
+    }
+
+    @PostMapping
+    public String createBooking(@RequestParam Long tourId, @RequestParam Long scheduleId, @ModelAttribute Booking booking) {
+        bookingService.createBooking(tourId, scheduleId, booking);
+        return "redirect:/booking/success";
+    }
+
+
 
 
 

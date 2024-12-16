@@ -2,9 +2,7 @@ package com.SpringBootJdk22.SpringBootJdk22.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -12,17 +10,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 public class TourSchedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // ID của lịch trình
 
-    @Column(nullable = false, updatable = false, columnDefinition = "DATETIME")
-    private LocalDateTime startDate;
+    @Column(nullable = false)
+    private LocalDate startDate; // Ngày bắt đầu
 
-    @Column(nullable = false, updatable = false, columnDefinition = "DATETIME")
-    private LocalDateTime endDate;
+    @Column(nullable = false)
+    private LocalDate endDate; // Ngày kết thúc
 
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = false)
-    private Tour tour; // Liên kết với Tour
+    private Tour tour; // Liên kết với tour
 }

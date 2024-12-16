@@ -22,16 +22,16 @@ public class TourService {
     private final ImageRepository imageRepository;
 
     // Retrieve all products from the database
-    public List<Tour> getAllProducts() {
+    public List<Tour> getAllTours() {
         return tourRepository.findAll();
     }
 
     // Retrieve a product by its id
-    public Optional<Tour> getProductById(Long id) {
+    public Optional<Tour> getTourById(Long id) {
         return tourRepository.findById(id);
     }
 
-    public List<Tour> findProductsByName(String name) {
+    public List<Tour> findToursByName(String name) {
         return tourRepository.findByNameContainingIgnoreCase(name);
     }
 
@@ -40,12 +40,12 @@ public class TourService {
         return tourRepository.findByItemCategory(itemCategory);
     }
     // Add a new product to the database
-    public Tour addProduct(Tour tour) {
+    public Tour addTour(Tour tour) {
         return tourRepository.save(tour);
     }
 
     // Update an existing product
-    public Tour updateProduct(@NotNull Tour tour) {
+    public Tour updateTour(@NotNull Tour tour) {
         Tour existingTour = tourRepository.findById(tour.getId())
                 .orElseThrow(() -> new IllegalStateException("Product with ID " +
                         tour.getId() + " does not exist."));
@@ -53,6 +53,7 @@ public class TourService {
         // Update fields
         existingTour.setName(tour.getName());
         existingTour.setPrice(tour.getPrice());
+        existingTour.setPerson(tour.getPerson());
         existingTour.setDiscountPercentage(tour.getDiscountPercentage());
         existingTour.setDescription(tour.getDescription());
         existingTour.setItemCategory(tour.getItemCategory());
@@ -62,7 +63,7 @@ public class TourService {
     }
 
     // Delete a product by its id
-    public void deleteProductById(Long id) {
+    public void deleteTourById(Long id) {
         if (!tourRepository.existsById(id)) {
             throw new IllegalStateException("Product with ID " + id + " does not exist.");
         }
@@ -82,7 +83,7 @@ public class TourService {
         imageRepository.deleteById(id);
     }
 
-    public List<Tour> findProductsByCategory(Long categoryId) {
+    public List<Tour> findToursByCategory(Long categoryId) {
         return tourRepository.findByItemCategory_Id(categoryId);
     }
 }

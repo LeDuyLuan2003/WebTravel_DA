@@ -36,7 +36,7 @@ public class TourController {
 
     @GetMapping()
     public String showProductList(Model model) {
-        model.addAttribute("tours", tourService.getAllProducts());
+        model.addAttribute("tours", tourService.getAllTours());
         return "/admin/tours/tour-list";
     }
 
@@ -75,7 +75,7 @@ public class TourController {
             }
 
             // Save tour information in database
-            Tour savedTour = tourService.addProduct(tour);
+            Tour savedTour = tourService.addTour(tour);
 
             // Save additional images related to the tour
             for (MultipartFile imageFile : imageFiles) {
@@ -97,7 +97,7 @@ public class TourController {
 
     @GetMapping("/update/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Tour tour = tourService.getProductById(id)
+        Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         // Lấy ItemCategory và Category của Tour này
         ItemCategory selectedItemCategory = tour.getItemCategory();
@@ -129,7 +129,7 @@ public class TourController {
         }
 
         try {
-            Tour existingTour = tourService.getProductById(id)
+            Tour existingTour = tourService.getTourById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
 
             // Update avatar if provided
@@ -141,6 +141,7 @@ public class TourController {
             // Update fields and recalculate finalPrice
             existingTour.setName(tour.getName());
             existingTour.setPrice(tour.getPrice());
+            existingTour.setPerson(tour.getPerson());
             existingTour.setDiscountPercentage(tour.getDiscountPercentage());
             existingTour.setDescription(tour.getDescription());
             existingTour.setItemCategory(tour.getItemCategory());
@@ -149,7 +150,7 @@ public class TourController {
                     : tour.getPrice());
 
             // Save updated tour
-            Tour updatedTour = tourService.updateProduct(existingTour);
+            Tour updatedTour = tourService.updateTour(existingTour);
 
             // Save new images
             for (MultipartFile imageFile : imageFiles) {
@@ -172,13 +173,13 @@ public class TourController {
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        tourService.deleteProductById(id);
+        tourService.deleteTourById(id);
         return "redirect:/admin/tour";
     }
 
     @GetMapping("/detail/{id}")
     public String showProductDetail(@PathVariable Long id, Model model) {
-        Tour tour = tourService.getProductById(id)
+        Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
         return "/admin/tours/tour-detail";
@@ -186,7 +187,7 @@ public class TourController {
 
     @GetMapping("/search")
     public String searchProductsByName(@RequestParam("name") String name, Model model) {
-        List<Tour> searchResults = tourService.findProductsByName(name);
+        List<Tour> searchResults = tourService.findToursByName(name);
         model.addAttribute("products", searchResults);
         return "/admin/tours/tour-list";
     }

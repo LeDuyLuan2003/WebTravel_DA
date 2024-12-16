@@ -50,7 +50,7 @@ public class CategoryController {
     // Hiển thị các sản phẩm theo Category
     @GetMapping("/{id}")
     public String getProductsByCategory(@PathVariable("id") Long categoryId, Model model) {
-        List<Tour> tours = tourService.findProductsByCategory(categoryId);
+        List<Tour> tours = tourService.findToursByCategory(categoryId);
         model.addAttribute("products", tours);
         model.addAttribute("categories", categoryService.getAllCategories());
         return "admin/products/product-list";

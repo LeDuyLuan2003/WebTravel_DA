@@ -77,6 +77,7 @@
       <!-- Thông tin tour -->
       <div class="tour-detail-info mt-3">
         <h2 th:text="${tour.name}">Tour Name</h2>
+        <p><strong>Person:</strong> <span th:text="${tour.person}">Person</span></p>
         <p><strong>Price:</strong> <span th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}"></span></p>
         <p><strong>Category:</strong> <span th:text="${tour.itemCategory.name}">Category</span></p>
         <p><strong>Description:</strong> <span th:text="${tour.description}">Description</span></p>

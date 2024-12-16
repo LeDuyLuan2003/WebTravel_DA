@@ -26,6 +26,12 @@
       <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
     </div>
 
+    <div class="mb-3">
+      <label for="person" class="form-label">Number of Persons:</label>
+      <input type="number" th:field="*{person}" class="form-control" id="person" required>
+      <div class="text-danger" th:if="${#fields.hasErrors('person')}" th:errors="*{person}"></div>
+    </div>
+
     <!-- Phần trăm giảm giá -->
     <div class="mb-3">
       <label for="discountPercentage" class="form-label">Discount Percentage:</label>

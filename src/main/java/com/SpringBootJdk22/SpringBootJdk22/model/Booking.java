@@ -2,7 +2,6 @@ package com.SpringBootJdk22.SpringBootJdk22.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Setter
@@ -18,29 +17,31 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = false)
-    private Tour tour; // Tour được đăng ký
-
-    @ManyToOne
-    @JoinColumn(name = "tour_schedule_id", nullable = false)
-    private TourSchedule schedule; // Lịch trình được chọn cho tour
+    private Tour tour; // Tour được đặt
 
     @Column(nullable = false)
-    private String fullName; // Họ và tên người dùng
+    private LocalDate startDate; // Ngày bắt đầu lịch trình (lưu trực tiếp)
 
     @Column(nullable = false)
-    private String email; // Email người dùng
+    private LocalDate endDate; // Ngày kết thúc lịch trình (lưu trực tiếp)
+
+    @Column(nullable = false,columnDefinition = "TEXT CHARACTER SET utf8 COLLATE utf8_general_ci")
+    private String fullName; // Họ và tên của người đặt
 
     @Column(nullable = false)
-    private String phoneNumber; // Số điện thoại người dùng
+    private String email; // Email người đặt
+
+    @Column(nullable = false)
+    private String phoneNumber; // Số điện thoại người đặt
 
     @Column(name = "booking_date", nullable = false)
-    private LocalDate bookingDate; // Ngày đăng ký (tự động)
+    private LocalDate bookingDate; // Ngày đặt (tự động)
 
     @Column(name = "number_of_people", nullable = false)
     private int numberOfPeople; // Số lượng người tham gia
 
     @Column(name = "status", nullable = false)
-    private String status = "Pending"; // Trạng thái của booking mặc định là "Pending"
+    private String status = "Pending"; // Trạng thái đặt chỗ
 
     @PrePersist
     public void prePersist() {

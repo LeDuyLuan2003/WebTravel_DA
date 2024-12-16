@@ -46,14 +46,14 @@ public class EmployeeController {
 
     @GetMapping("/tour")
     public String showProductList(Model model) {
-        model.addAttribute("tours", tourService.getAllProducts());
+        model.addAttribute("tours", tourService.getAllTours());
         return "/employee/tours/tour-list";
     }
 
 
     @GetMapping("/detail/{id}")
     public String showProductDetail(@PathVariable Long id, Model model) {
-        Tour tour = tourService.getProductById(id)
+        Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
         return "/users/tour-detail";
@@ -92,7 +92,7 @@ public class EmployeeController {
             }
 
             // Save tour information in database
-            Tour savedTour = tourService.addProduct(tour);
+            Tour savedTour = tourService.addTour(tour);
 
             // Save additional images related to the tour
             for (MultipartFile imageFile : imageFiles) {
