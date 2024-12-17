@@ -1,5 +1,6 @@
 package com.SpringBootJdk22.SpringBootJdk22.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -23,5 +24,6 @@ public class TourSchedule {
 
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = false)
+    @JsonBackReference
     private Tour tour; // Liên kết với tour
 }

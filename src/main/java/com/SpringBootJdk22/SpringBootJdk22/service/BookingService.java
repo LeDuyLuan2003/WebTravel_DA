@@ -4,28 +4,39 @@ import com.SpringBootJdk22.SpringBootJdk22.model.Booking;
 import com.SpringBootJdk22.SpringBootJdk22.model.TourSchedule;
 import com.SpringBootJdk22.SpringBootJdk22.repository.BookingRepository;
 import com.SpringBootJdk22.SpringBootJdk22.repository.TourScheduleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class BookingService {
 
-    @Autowired
-    private TourScheduleRepository tourScheduleRepository;
+    private final BookingRepository bookingRepository;
 
-    @Autowired
-    private BookingRepository bookingRepository;
-
-    public Booking createBooking(Long tourId, Long scheduleId, Booking booking) {
-        // Lấy thông tin lịch trình từ TourSchedule
-        TourSchedule schedule = tourScheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new RuntimeException("TourSchedule not found"));
-
-        // Sao chép thông tin lịch trình sang Booking
-        booking.setStartDate(schedule.getStartDate());
-        booking.setEndDate(schedule.getEndDate());
-
-        // Lưu Booking
+    // Lưu booking
+    public Booking saveBooking(Booking booking) {
         return bookingRepository.save(booking);
     }
+
+    // Lấy tất cả các booking (nếu cần danh sách cho admin quản lý)
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
+    }
+
+    // Lấy booking theo ID
+    public Optional<Booking> getBookingById(Long id) {
+        return bookingRepository.findById(id);
+    }
+
+    // Xóa booking
+    public void deleteBooking(Long id) {
+        bookingRepository.deleteById(id);
+    }
 }
+

@@ -25,9 +25,9 @@ public class HomeController {
     private  ItemCategoryService itemCategoryService;
     @Autowired
     private BookingService bookingService;
-
     @Autowired
-    private TourScheduleRepository tourScheduleRepository;
+    private TourScheduleService tourScheduleService;
+
     @ModelAttribute
     public void addCategoriesToModel(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
@@ -128,21 +128,36 @@ public class HomeController {
         return "/users/blog";
     }
 
+    // Hiển thị form Booking
     @GetMapping("/booking")
     public String showBookingForm(Model model) {
-        // Gửi danh sách tour và lịch trình đến view
-        model.addAttribute("tours", tourScheduleRepository.findAll());
+        // Lấy danh sách Tour và truyền vào model
+        List<Tour> tours = tourService.getAllTours();
+        model.addAttribute("tours", tours);
+
+        // Tạo Booking object để bind dữ liệu từ form
         model.addAttribute("booking", new Booking());
-        return "booking-form";
+        return "/users/booking"; // Đường dẫn đến file Thymeleaf của form booking
     }
 
-    @PostMapping
-    public String createBooking(@RequestParam Long tourId, @RequestParam Long scheduleId, @ModelAttribute Booking booking) {
-        bookingService.createBooking(tourId, scheduleId, booking);
-        return "redirect:/booking/success";
+    // API: Lấy danh sách lịch trình (TourSchedule) theo Tour ID
+    @GetMapping("/booking/schedules/{tourId}")
+    @ResponseBody
+    public List<TourSchedule> getSchedulesByTourId(@PathVariable Long tourId) {
+        return tourScheduleService.findSchedulesByTourId(tourId);
     }
 
-
+    // Lưu Booking
+    @PostMapping("/booking")
+    public String saveBooking(@ModelAttribute Booking booking, Model model) {
+        try {
+            bookingService.saveBooking(booking);
+            model.addAttribute("successMessage", "Booking has been successfully submitted!");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "An error occurred while processing your booking.");
+        }
+        return "redirect:/booking";
+    }
 
 
 

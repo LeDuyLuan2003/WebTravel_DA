@@ -37,4 +37,7 @@ public class TourScheduleService {
     public void deleteSchedule(Long id) {
         tourScheduleRepository.deleteById(id);
     }
+    public List<TourSchedule> findSchedulesByTourId(Long tourId) {
+        return tourScheduleRepository.findByTourId(tourId);
+    }
 }

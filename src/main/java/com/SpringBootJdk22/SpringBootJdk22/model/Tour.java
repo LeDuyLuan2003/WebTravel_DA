@@ -1,5 +1,6 @@
 package com.SpringBootJdk22.SpringBootJdk22.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -38,6 +39,7 @@ public class Tour {
     private List<Image> images;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<TourSchedule> schedules; // Thêm quan hệ với TourSchedule
 
     private long discountPercentage;
