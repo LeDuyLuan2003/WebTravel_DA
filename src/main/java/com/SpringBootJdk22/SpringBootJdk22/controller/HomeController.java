@@ -82,12 +82,6 @@ public class HomeController {
         return partitions;
     }
 
-    @GetMapping("/search")
-    public String searchProductsByName(@RequestParam("name") String name, Model model) {
-        List<Tour> searchResults = tourService.findToursByName(name);
-        model.addAttribute("tours", searchResults);
-        return "/users/home"; // Template dùng cho người dùng
-    }
 
 
     @GetMapping("/detail/{id}")
@@ -159,6 +153,18 @@ public class HomeController {
         return "redirect:/booking";
     }
 
+    @GetMapping("/filter")
+    public String filterTours(
+                              @RequestParam(required = false) Long priceMin,
+                              @RequestParam(required = false) Long priceMax,
+                              @RequestParam(required = false) String startDate,
+                              @RequestParam(required = false) String categoryName,
+                              @RequestParam(required = false) String itemCategoryName,
+                              Model model) {
+        List<Tour> tours = tourService.filterTours(priceMin, priceMax, startDate, categoryName, itemCategoryName);
+        model.addAttribute("tours", tours);
+        return "/users/search";
+    }
 
 
     //exception

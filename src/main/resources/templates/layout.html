@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <style>
         .header-bottom {
@@ -101,21 +105,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white header-bottom">
     <div class="container-fluid">
         <a class="navbar-brand text-warning" href="/">VIETNAM AMAZING</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tours</a>-->
-<!--                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                        <li th:each="category : ${categories}">-->
-<!--                            <a th:href="@{/tours/category/{id}(id=${category.id})}" class="dropdown-item" th:text="${category.name}">Category Name</a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </li>-->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
                     <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
@@ -164,49 +158,7 @@
     </section>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    window.onscroll = function() {
-        var header = document.querySelector('.header-bottom');
-        if (window.scrollY > 50) {
-            header.classList.add('sticky');
-        } else {
-            header.classList.remove('sticky');
-        }
-    };
-</script>
 
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/674b10462480f5b4f5a62430/1idujf5nh';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-</script>
-<!--End of Tawk.to Script-->
-
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        // Tìm phần tử có class 'google-translate-element' và thêm id 'google_translate_element'
-        const translateElement = document.querySelector('.google-translate-element');
-        if (translateElement) {
-            translateElement.id = 'google_translate_element'; // Thêm id tạm
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,vi',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
-    }
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-</body>
 
 <footer>
     <div class="container">
@@ -250,5 +202,48 @@
         </div>
     </div>
 </footer>
+
+<script>
+    window.onscroll = function() {
+        var header = document.querySelector('.header-bottom');
+        if (window.scrollY > 50) {
+            header.classList.add('sticky');
+        } else {
+            header.classList.remove('sticky');
+        }
+    };
+</script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/674b10462480f5b4f5a62430/1idujf5nh';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        // Tìm phần tử có class 'google-translate-element' và thêm id 'google_translate_element'
+        const translateElement = document.querySelector('.google-translate-element');
+        if (translateElement) {
+            translateElement.id = 'google_translate_element'; // Thêm id tạm
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,vi',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    }
+</script>
+
+</body>
+
 
 </html>

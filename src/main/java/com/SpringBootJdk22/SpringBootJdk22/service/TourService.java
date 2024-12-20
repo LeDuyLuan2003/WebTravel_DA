@@ -5,7 +5,9 @@ import com.SpringBootJdk22.SpringBootJdk22.model.ItemCategory;
 import com.SpringBootJdk22.SpringBootJdk22.model.Tour;
 import com.SpringBootJdk22.SpringBootJdk22.repository.ImageRepository;
 import com.SpringBootJdk22.SpringBootJdk22.repository.TourRepository;
+import com.SpringBootJdk22.SpringBootJdk22.specification.TourSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.constraints.NotNull;
@@ -86,4 +88,18 @@ public class TourService {
     public List<Tour> findToursByCategory(Long categoryId) {
         return tourRepository.findByItemCategory_Id(categoryId);
     }
+
+
+    public List<Tour> filterTours( Long priceMin, Long priceMax, String startDate,
+                                  String categoryName, String itemCategoryName) {
+        Specification<Tour> spec = Specification
+                .where(TourSpecification.filterByPriceRange(priceMin, priceMax))
+                .and(TourSpecification.filterByStartDate(startDate))
+                .and(TourSpecification.filterByCategory(categoryName))
+                .and(TourSpecification.filterByItemCategory(itemCategoryName));
+
+        return tourRepository.findAll(spec);
+    }
+
+
 }

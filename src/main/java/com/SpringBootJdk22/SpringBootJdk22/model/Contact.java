@@ -29,7 +29,7 @@ public class Contact {
     private String message;
 
     // Sử dụng LocalDateTime thay cho Date
-    @Column(nullable = false, updatable = false, columnDefinition = "DATETIME")
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
 
     private boolean responded = false;

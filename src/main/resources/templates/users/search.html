@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container my-5">
+    <h2>Search Results</h2>
+    <div class="row">
+        <div th:each="tour : ${tours}" class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img th:src="@{'/uploads/' + ${tour.avatar}}" class="card-img-top" alt="Tour Image">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${tour.name}">Tour Name</h5>
+                    <p class="card-text">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span th:text="${tour.itemCategory.name}">Item Category</span>
+                    </p>
+                    <p class="card-text">
+                        Final Price: <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}"></span>
+                    </p>
+                    <a th:href="@{'/detail/' + ${tour.id}}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</section>
+</body>
+</html>

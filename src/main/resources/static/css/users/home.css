@@ -138,3 +138,52 @@ h2::after {
   margin-top: 10px; /* Giảm khoảng cách trên */
   font-size: 0.9em; /* Giảm kích thước nút */
 }
+
+
+.filter-section {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.filter-section h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-section .form-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.filter-section .form-control {
+    border-radius: 6px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+.filter-section .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+.filter-section button {
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    background-color: #007bff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.filter-section button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}

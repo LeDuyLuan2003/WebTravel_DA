@@ -1,12 +1,10 @@
 package com.SpringBootJdk22.SpringBootJdk22.controller;
 
+import com.SpringBootJdk22.SpringBootJdk22.model.Booking;
 import com.SpringBootJdk22.SpringBootJdk22.model.Contact;
 import com.SpringBootJdk22.SpringBootJdk22.model.Image;
 import com.SpringBootJdk22.SpringBootJdk22.model.Tour;
-import com.SpringBootJdk22.SpringBootJdk22.service.CategoryService;
-import com.SpringBootJdk22.SpringBootJdk22.service.ContactService;
-import com.SpringBootJdk22.SpringBootJdk22.service.ItemCategoryService;
-import com.SpringBootJdk22.SpringBootJdk22.service.TourService;
+import com.SpringBootJdk22.SpringBootJdk22.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +33,8 @@ public class EmployeeController {
     private CategoryService categoryService;
     @Autowired
     private ContactService contactService;
-
+    @Autowired
+    private BookingService bookingService;
     @Autowired
     private ItemCategoryService itemCategoryService;
 
@@ -140,7 +139,17 @@ public class EmployeeController {
     }
 
 
+    @GetMapping("/booking")
+    public String showBookingList(Model model) {
+        // Fetch all bookings from the service
+        List<Booking> bookings = bookingService.getAllBookings();
 
+        // Add bookings to the model
+        model.addAttribute("bookings", bookings);
+
+        // Return the template name (list-booking.html)
+        return "employee/bookings/list-booking";
+    }
 
 
 
