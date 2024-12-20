@@ -22,11 +22,19 @@
 <section layout:fragment="custom-content" class="container mt-5">
     <h1>Booking List</h1>
 
-    <!-- Filter Section -->
-    <div class="filter-section">
-        <label for="specificDate">Select Date:</label>
-        <input type="date" id="specificDate">
-        <button id="filterButton">Filter</button>
+
+    <div class="mb-3">
+        <form id="filterForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="specificDate" class="form-label">Select Date:</label>
+                    <input type="date" id="specificDate" name="specificDate" class="form-control">
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="button" class="btn btn-primary" id="filterButton">Filter</button>
+                </div>
+            </div>
+        </form>
     </div>
 
     <!-- Booking Table -->
@@ -37,12 +45,12 @@
             <th>Tour</th>
             <th>Name</th>
             <th>Email</th>
-            <th>Phone </th>
+            <th>Phone</th>
             <th>Person</th>
             <th>StartDate</th>
-            <th>EndDate</th>
-            <th>Create Date</th>
-            <th>Status</th>
+            <th>EndDate...</th>
+            <th>CreateDate</th>
+            <th>Confirmed</th>
         </tr>
         </thead>
         <tbody>
@@ -57,7 +65,15 @@
             <td th:text="${booking.startDate}"></td>
             <td th:text="${booking.endDate}"></td>
             <td th:text="${booking.bookingDate}"></td>
-            <td th:text="${booking.status}"></td>
+            <td>
+                <form th:action="@{/employee/booking/updateStatus}" method="post" style="display:inline;">
+                    <input type="hidden" th:value="${booking.id}" name="bookingId">
+                    <select name="status" class="form-select form-select-sm status-dropdown" onchange="this.form.submit()">
+                        <option value="true" th:selected="${booking.status}">Yes</option>
+                        <option value="false" th:selected="${!booking.status}">No</option>
+                    </select>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

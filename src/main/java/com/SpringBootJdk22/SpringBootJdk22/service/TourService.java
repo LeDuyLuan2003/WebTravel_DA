@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,16 +91,16 @@ public class TourService {
     }
 
 
-    public List<Tour> filterTours( Long priceMin, Long priceMax, String startDate,
+    public List<Tour> filterTours(Long priceMin, Long priceMax, LocalDate startDate,
                                   String categoryName, String itemCategoryName) {
         Specification<Tour> spec = Specification
                 .where(TourSpecification.filterByPriceRange(priceMin, priceMax))
                 .and(TourSpecification.filterByStartDate(startDate))
-                .and(TourSpecification.filterByCategory(categoryName))
-                .and(TourSpecification.filterByItemCategory(itemCategoryName));
+                .and(TourSpecification.filterByCategoryAndItemCategory(categoryName, itemCategoryName)); // Lọc kết hợp
 
         return tourRepository.findAll(spec);
     }
+
 
 
 }

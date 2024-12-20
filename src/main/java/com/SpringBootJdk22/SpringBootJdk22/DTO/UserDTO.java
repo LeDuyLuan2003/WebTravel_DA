@@ -26,7 +26,7 @@ public class UserDTO {
     private String phone;
 
     private String provider;
-
+    private boolean locked;
     private Set<Long> roles;
 
     private String password;

@@ -24,6 +24,7 @@
                         Final Price: <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}"></span>
                     </p>
                     <a th:href="@{'/detail/' + ${tour.id}}" class="btn btn-primary">View Details</a>
+                    <a th:href="@{/booking}" class="btn btn-warning">Booking</a>
                 </div>
             </div>
         </div>

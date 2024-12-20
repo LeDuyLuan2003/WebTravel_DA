@@ -54,7 +54,10 @@
                 <label for="confirmPassword">Confirm Password:</label>
                 <input type="password" class="form-control" id="confirmPassword">
             </div>
-
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="locked" th:field="*{locked}">
+                <label class="form-check-label" for="locked">Account Locked</label>
+            </div>
             <button type="submit" class="btn btn-primary">Save</button>
             <a href="javascript:history.back()" class="btn btn-link">Cancel</a>
         </form>

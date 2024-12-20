@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,7 +163,16 @@ public class HomeController {
                               @RequestParam(required = false) String categoryName,
                               @RequestParam(required = false) String itemCategoryName,
                               Model model) {
-        List<Tour> tours = tourService.filterTours(priceMin, priceMax, startDate, categoryName, itemCategoryName);
+        LocalDate parsedStartDate = null;
+        if (startDate != null && !startDate.isEmpty()) {
+            try {
+                parsedStartDate = LocalDate.parse(startDate); // Chuyển từ String sang LocalDate
+            } catch (DateTimeParseException e) {
+                model.addAttribute("errorMessage", "Invalid start date format. Expected yyyy-MM-dd.");
+                return "/users/search"; // Trả về trang lỗi
+            }
+        }
+        List<Tour> tours = tourService.filterTours(priceMin, priceMax, parsedStartDate, categoryName, itemCategoryName);
         model.addAttribute("tours", tours);
         return "/users/search";
     }

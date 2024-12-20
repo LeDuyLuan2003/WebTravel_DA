@@ -40,8 +40,7 @@ public class Booking {
     @Column(name = "number_of_people", nullable = false)
     private int numberOfPeople; // Số lượng người tham gia
 
-    @Column(name = "status", nullable = false)
-    private String status = "Pending"; // Trạng thái đặt chỗ
+    private boolean status = false; // Trạng thái đặt chỗ
 
     @PrePersist
     public void prePersist() {

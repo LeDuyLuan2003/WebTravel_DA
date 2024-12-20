@@ -99,6 +99,7 @@ public class UserService implements UserDetailsService {
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone()); // Cập nhật thêm trường phone
         user.setProvider(userDTO.getProvider());
+        user.setLocked(userDTO.isLocked());
 
         if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -126,6 +127,7 @@ public class UserService implements UserDetailsService {
                 .phone(user.getPhone()) // Thêm phone vào DTO
                 .email(user.getEmail())
                 .provider(user.getProvider())
+                .locked(user.isLocked())
                 .roles(user.getRoles().stream().map(Role::getId).collect(Collectors.toSet()))
                 .build();
     }

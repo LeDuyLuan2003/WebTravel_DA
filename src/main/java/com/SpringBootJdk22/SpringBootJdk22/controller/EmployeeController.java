@@ -151,7 +151,15 @@ public class EmployeeController {
         return "employee/bookings/list-booking";
     }
 
-
+    @PostMapping("/booking/updateStatus")
+    public String updateBookingStatus(@RequestParam("bookingId") Long bookingId,
+                                      @RequestParam("status") boolean status) {
+        Booking booking = bookingService.getBookingById(bookingId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid booking ID: " + bookingId));
+        booking.setStatus(status);
+        bookingService.saveBooking(booking); // Lưu trạng thái mới vào DB
+        return "redirect:/employee/booking"; // Quay lại trang danh sách
+    }
 
     // Save file to "static/uploads"
     private String saveFile(MultipartFile file) throws IOException {
