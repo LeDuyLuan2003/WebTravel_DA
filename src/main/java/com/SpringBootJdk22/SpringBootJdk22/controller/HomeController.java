@@ -40,34 +40,20 @@ public class HomeController {
         List<ItemCategory> itemCategories = itemCategoryService.findByCategoryId(categoryId);
         return itemCategories;
     }
-    // Display a list of all products
     @GetMapping
     public String showTours(Model model) {
         List<Category> categories = categoryService.getAllCategories();
 
         for (Category category : categories) {
-            // Lấy tất cả các tour
+            // Lấy tất cả các tour trong danh mục
             List<Tour> allTours = new ArrayList<>();
             for (ItemCategory itemCategory : category.getItemCategories()) {
                 List<Tour> tours = tourService.findByItemCategory(itemCategory);
                 allTours.addAll(tours);
             }
 
-            // Tính toán số tour chia hết cho 3
-            int mod = allTours.size() % 3;
-            if (mod != 0) {
-                allTours = allTours.subList(0, allTours.size() - mod); // Loại bỏ phần dư
-            }
-
-            // Phân chia các tour thành các nhóm 3
-            List<List<Tour>> partitionedTours = new ArrayList<>();
-            for (int i = 0; i < allTours.size(); i += 3) {
-                partitionedTours.add(allTours.subList(i, Math.min(i + 3, allTours.size())));
-            }
-
-            // Gán danh sách đã xử lý vào category
+            // Gán danh sách tour vào category (không chia nhóm)
             category.setAllTours(allTours);
-            category.setPartitionedTours(partitionedTours);
         }
 
         model.addAttribute("categories", categories);
@@ -75,14 +61,7 @@ public class HomeController {
     }
 
 
-    // Hàm tiện ích để chia danh sách thành các nhóm nhỏ
-    private <T> List<List<T>> partitionList(List<T> list, int size) {
-        List<List<T>> partitions = new ArrayList<>();
-        for (int i = 0; i < list.size(); i += size) {
-            partitions.add(list.subList(i, Math.min(i + size, list.size())));
-        }
-        return partitions;
-    }
+
 
 
 

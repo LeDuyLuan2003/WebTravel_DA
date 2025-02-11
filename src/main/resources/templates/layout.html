@@ -125,6 +125,9 @@
                     <a th:href="@{/contact}" class="nav-link text-dark">Contact</a>
                 </li>
                 <li class="nav-item">
+                    <a th:href="@{/booking}" class="nav-link text-dark">Booking</a>
+                </li>
+                <li class="nav-item">
                     <a th:href="@{/blog}" class="nav-link text-dark">Blog</a>
                 </li>
 
@@ -143,11 +146,6 @@
 <!--                    <a class="btn btn-outline-dark" href="/login">Login</a>-->
 <!--                </li>-->
 <!--            </ul>-->
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                <li class="nav-item">
-                    <div class="google-translate-element"></div>
-                </li>
-            </ul>
         </div>
     </div>
 </nav>
@@ -228,20 +226,6 @@
 </script>
 <!--End of Tawk.to Script-->
 
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        // Tìm phần tử có class 'google-translate-element' và thêm id 'google_translate_element'
-        const translateElement = document.querySelector('.google-translate-element');
-        if (translateElement) {
-            translateElement.id = 'google_translate_element'; // Thêm id tạm
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,vi',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
-    }
-</script>
 
 </body>
 

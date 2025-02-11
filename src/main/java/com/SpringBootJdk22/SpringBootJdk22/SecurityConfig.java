@@ -49,6 +49,9 @@ public class SecurityConfig {
                                 "/detail/**",
                                 "/booking/**",
                                 "/blog/**",
+                                "/contact/**",
+                                "/itemCategory/byCategory/**",
+                                "/filter/**",
                                 "/register/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
