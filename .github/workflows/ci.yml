@@ -30,14 +30,14 @@ jobs:
 
       - name: Setup MySQL Database
         run: |
-          sudo mysql --user=root <<EOF
-          ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'luanml001';
-          FLUSH PRIVILEGES;
-          CREATE DATABASE IF NOT EXISTS webtourism;
-          EOF
-      
-
-      # Kiểm tra MySQL có hoạt động không
+          sudo systemctl start mysql
+          sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'luanml001';"
+          sudo mysql -u root -pluanml001 -e "FLUSH PRIVILEGES;"
+          sudo mysql -u root -pluanml001 -e "CREATE DATABASE IF NOT EXISTS webtourism;"
+          
+          
+          
+          # Kiểm tra MySQL có hoạt động không
       - name: Verify MySQL Connection
         run: sudo mysql -u root -pluanml001 -e "SHOW DATABASES;"
 
