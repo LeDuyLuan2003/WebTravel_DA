@@ -38,3 +38,7 @@ jobs:
 
       - name: Run Tests
         run: mvn test
+
+      - name: Debug Surefire Test Reports
+        if: failure()
+        run: cat target/surefire-reports/*.txt || true
