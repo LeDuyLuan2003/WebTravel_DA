@@ -26,10 +26,10 @@ jobs:
           sudo systemctl start mysql
           sudo systemctl status mysql
 
-      - name: Create Test Database
+      - name: Reconfigure MySQL root authentication
         run: |
-          sudo mysql -e "CREATE DATABASE webtourism;"
-          sudo mysql -e "SHOW DATABASES;"
+          sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';"
+          sudo mysql -e "FLUSH PRIVILEGES;"
 
       - name: Run Tests
         run: mvn test
