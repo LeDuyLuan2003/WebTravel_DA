@@ -18,7 +18,11 @@ jobs:
           MYSQL_ROOT_PASSWORD: luanml001
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root -pluanml001"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
     steps:
       - name: Checkout code
@@ -29,6 +33,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Wait for MySQL to be ready
+        run: sleep 30  # Chờ MySQL khởi động
 
       - name: Run Tests
         run: mvn test
