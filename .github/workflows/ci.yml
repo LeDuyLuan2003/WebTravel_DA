@@ -18,7 +18,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: ""
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=10s --health-retries=10
+        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=5s --health-timeout=10s --health-retries=10
 
     steps:
       - name: Checkout code
@@ -30,8 +30,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Verify MySQL
-        run: mysql -h 127.0.0.1 -u root -e "SHOW DATABASES;"
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {1..30}; do
+            mysql -h 127.0.0.1 -u root -e "SELECT 1;" && break
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
 
       - name: Run Tests
         run: mvn test
