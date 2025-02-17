@@ -8,21 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8
-        env:
-          MYSQL_DATABASE: webtourism
-          MYSQL_USER: root
-          MYSQL_PASSWORD: luanml001
-          MYSQL_ROOT_PASSWORD: luanml001
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root -pluanml001"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=10
 
     steps:
       - name: Checkout code
@@ -33,8 +18,25 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Wait for MySQL to be ready
-        run: sleep 30  # Chờ MySQL khởi động
 
+      # Cài đặt MySQL trên GitHub Actions (KHÔNG DÙNG DOCKER)
+      - name: Install MySQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-server
+          sudo systemctl start mysql
+
+      # Thiết lập user & database MySQL giống trên máy bạn
+      - name: Setup MySQL Database
+        run: |
+          mysql -e "CREATE DATABASE IF NOT EXISTS webtourism;"
+          mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'luanml001';"
+          mysql -e "FLUSH PRIVILEGES;"
+
+      # Kiểm tra MySQL có hoạt động không
+      - name: Verify MySQL Connection
+        run: mysql -u root -pluanml001 -e "SHOW DATABASES;"
+
+      # Chạy test
       - name: Run Tests
         run: mvn test
