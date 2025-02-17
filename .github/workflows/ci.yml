@@ -3,13 +3,23 @@ name: CI - Build & Test Spring Boot
 on:
   push:
     branches:
-      - main  # Chạy CI khi có code mới trên nhánh main
-    # paths:
-          # - 'src/**'   # Chỉ chạy khi có thay đổi trong thư mục src/
+      - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_DATABASE: webtourism
+          MYSQL_USER: root
+          MYSQL_PASSWORD: luanml001
+          MYSQL_ROOT_PASSWORD: luanml001
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,12 +30,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: maven-
-
-      - name: Build & Run Tests
-        run: mvn clean package test
+      - name: Run Tests
+        run: mvn test
