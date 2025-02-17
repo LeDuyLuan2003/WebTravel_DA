@@ -28,7 +28,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Wait for MySQL to be ready
+      - name: Verify MySQL Connection
         run: |
           for i in {1..30}; do
             mysql -h 127.0.0.1 -uroot -ppassword -e "SELECT 1;" && break
@@ -38,6 +38,7 @@ jobs:
 
       - name: Run Tests
         run: mvn test
+
 
       - name: Debug Surefire Test Reports
         if: failure()
