@@ -13,7 +13,7 @@ jobs:
         image: mysql:8
         env:
           MYSQL_DATABASE: webtourism
-#          MYSQL_ROOT_PASSWORD: luanml001
+          MYSQL_ROOT_PASSWORD: luanml001
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping -h localhost" --health-interval=5s --health-timeout=5s --health-retries=40
@@ -28,13 +28,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Verify MySQL Connection
-        run: |
-          for i in {1..30}; do
-            mysql -h 127.0.0.1 -uroot -e "SELECT 1;"  && break
-            echo "Waiting for MySQL..."
-            sleep 2
-          done
+
 
       - name: Run Tests
         run: mvn test
