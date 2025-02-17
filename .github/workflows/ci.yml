@@ -13,6 +13,8 @@ jobs:
         image: mysql:8
         env:
           MYSQL_DATABASE: webtourism
+          MYSQL_USER: root
+          MYSQL_PASSWORD: luanml001
           MYSQL_ROOT_PASSWORD: luanml001
         ports:
           - 3306:3306
