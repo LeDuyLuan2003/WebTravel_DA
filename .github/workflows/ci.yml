@@ -37,3 +37,49 @@ jobs:
       - name: Debug Surefire Test Reports
         if: failure()
         run: cat target/surefire-reports/*.txt || true
+
+
+#
+#name: CI - Test MySQL in Spring Boot
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#
+#jobs:
+#  test:
+#    runs-on: ubuntu-latest
+#    services:
+#      mysql:
+#        image: mysql:8
+#        env:
+#          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+#          MYSQL_USER: ${{ secrets.MYSQL_USER }}
+#          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+#        ports:
+#          - 3306:3306
+#        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=5s --health-timeout=5s --health-retries=40
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Setup JDK 17
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#
+#      - name: Set Database Environment Variables
+#        run: |
+#          echo "SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/${{ secrets.MYSQL_DATABASE }}?useSSL=false&allowPublicKeyRetrieval=true" >> $GITHUB_ENV
+#          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.MYSQL_USER }}" >> $GITHUB_ENV
+#          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> $GITHUB_ENV
+#
+#      - name: Run Tests
+#        run: mvn test
+#
+#      - name: Debug Surefire Test Reports
+#        if: failure()
+#        run: cat target/surefire-reports/*.txt || true
