@@ -31,9 +31,12 @@ public class UserControllerTest {
     private PasswordEncoder passwordEncoder;
     @BeforeEach
     public void setup() {
+        // Tạo người dùng test
         User user = new User();
-        user.setUsername("user");
-        user.setPassword(passwordEncoder.encode("password")); // Mã hóa password
+        user.setUsername("user"); // Username hợp lệ
+        user.setPassword(passwordEncoder.encode("userpassword")); // Password hợp lệ
+        user.setEmail("user@example.com"); // Email hợp lệ
+        user.setPhone("0123456789"); // Phone hợp lệ (10 ký tự số)
         userRepository.save(user);
     }
     @Test
