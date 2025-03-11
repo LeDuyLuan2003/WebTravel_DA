@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import com.SpringBootJdk22.SpringBootJdk22.model.User;
+import com.SpringBootJdk22.SpringBootJdk22.repository.RoleRepository;
 import com.SpringBootJdk22.SpringBootJdk22.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,21 +25,8 @@ public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @BeforeEach
-    public void setup() {
-        // Tạo người dùng test
-        User user = new User();
-        user.setUsername("user"); // Username hợp lệ
-        user.setPassword(passwordEncoder.encode("userpassword")); // Password hợp lệ
-        user.setEmail("user@example.com"); // Email hợp lệ
-        user.setPhone("0123456789"); // Phone hợp lệ (10 ký tự số)
-        userRepository.save(user);
-    }
+
     @Test
     public void testShowLoginPage() throws Exception {
         mockMvc.perform(get("/login")) // Gửi yêu cầu GET đến /login
@@ -47,7 +35,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "user", password = "password", roles = "USER")
+    @WithMockUser(username = "user", password = "userpassword", roles = "USER")
     public void testLoginSuccess() throws Exception {
         mockMvc.perform(post("/login") // Gửi yêu cầu POST đến /login
                         .with(csrf()) //  THÊM CSRF TOKEN Ở ĐÂY
