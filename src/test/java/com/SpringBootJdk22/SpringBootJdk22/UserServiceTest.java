@@ -35,7 +35,7 @@ public class UserServiceTest {
         // Chuẩn bị dữ liệu giả
         User user = new User();
         user.setUsername("user");
-        user.setPassword("userpassword");
+        user.setPassword("password");
         when(userRepository.findByUsername("user")).thenReturn(Optional.of(user));
 
         // Gọi phương thức cần kiểm thử
@@ -44,7 +44,7 @@ public class UserServiceTest {
         // Kiểm tra kết quả
         assertNotNull(userDetails);
         assertEquals("user", userDetails.getUsername());
-        assertEquals("userpassword", userDetails.getPassword());
+        assertEquals("password", userDetails.getPassword());
     }
 
     @Test
