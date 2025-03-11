@@ -52,7 +52,8 @@ public class SecurityConfig {
                                 "/contact/**",
                                 "/itemCategory/byCategory/**",
                                 "/filter/**",
-                                "/register/**"
+                                "/register/**",
+                                "/login/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
@@ -92,9 +93,6 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement
                         .maximumSessions(1)
                         .expiredUrl("/login")
-                )
-                .httpBasic(httpBasic -> httpBasic
-                        .realmName("hutech")
                 )
                 .build();
 
