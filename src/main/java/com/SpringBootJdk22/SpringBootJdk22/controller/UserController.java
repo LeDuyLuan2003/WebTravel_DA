@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    @GetMapping("/login")
+    @GetMapping("/logins")
     public String login() {
         return "users/login";
     }
-    @GetMapping("/register")
+    @GetMapping("/registers")
     public String register(@NotNull Model model) {
         model.addAttribute("user", new User()); // Thêm một đối tượng User mới vào model
-        return "users/register";
+        return "users/registers";
     }
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user, // Validate đối tượng User
