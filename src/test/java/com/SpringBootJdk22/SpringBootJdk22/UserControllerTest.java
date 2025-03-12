@@ -11,10 +11,14 @@ import com.SpringBootJdk22.SpringBootJdk22.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.*;
@@ -32,6 +36,17 @@ public class UserControllerTest {
     @MockBean
     private RoleService roleService; // Mock RoleService để tránh lỗi
 
+    @MockBean
+    private BCryptPasswordEncoder passwordEncoder;
+
+
+
+    @Test
+    public void testShowLoginPage() throws Exception {
+        mockMvc.perform(get("/login")) // Gửi yêu cầu GET đến /login
+                .andExpect(status().isOk()) // Kiểm tra phản hồi có mã 200
+                .andExpect(view().name("users/login")); // Kiểm tra view trả về là "users/login"
+    }
 
     @Test
     public void testShowRegisterPage() throws Exception {
@@ -72,43 +87,6 @@ public class UserControllerTest {
     }
 
 
-    @Test
-    public void testShowLoginPage() throws Exception {
-        mockMvc.perform(get("/login")) // Gửi yêu cầu GET đến /login
-                .andExpect(status().isOk()) // Kiểm tra phản hồi có mã 200
-                .andExpect(view().name("users/login")); // Kiểm tra view trả về là "users/login"
-    }
 
-// Test Login
-//    @Test
-//    public void testLoginSuccess() throws Exception {
-//        // Giả lập UserDetails cho Spring Security
-//        UserDetails mockUser = org.springframework.security.core.userdetails.User
-//                .withUsername("user")
-//                .password("password") // Giả lập mật khẩu
-//                .roles("USER") // Cấp quyền USER
-//                .build();
-//
-//        when(userDetailsService.loadUserByUsername("user")).thenReturn(mockUser);
-//
-//        mockMvc.perform(post("/login")
-//                        .with(csrf()) // Thêm CSRF token
-//                        .param("username", "user")
-//                        .param("password", "password"))
-//                .andExpect(status().is3xxRedirection()) // Kiểm tra phản hồi chuyển hướng
-//                .andExpect(redirectedUrl("/")); // Kiểm tra nếu đăng nhập thành công sẽ chuyển hướng về "/"
-//    }
-//
-//    @Test
-//    public void testLoginFailure() throws Exception {
-//        // Giả lập UserDetailsService không tìm thấy user
-//        when(userDetailsService.loadUserByUsername("wronguser")).thenThrow(new RuntimeException("User not found"));
-//
-//        mockMvc.perform(post("/login")
-//                        .with(csrf()) // Thêm CSRF token
-//                        .param("username", "wronguser")
-//                        .param("password", "wrongpassword"))
-//                .andExpect(status().is3xxRedirection()) // Kiểm tra phản hồi chuyển hướng
-//                .andExpect(redirectedUrl("/login?error")); // Kiểm tra nếu sai tài khoản thì quay lại /login với lỗi
-//    }
+
 }

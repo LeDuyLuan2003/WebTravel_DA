@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.SpringBootJdk22.SpringBootJdk22.model.Role;
 import com.SpringBootJdk22.SpringBootJdk22.model.User;
 import com.SpringBootJdk22.SpringBootJdk22.repository.UserRepository;
 import com.SpringBootJdk22.SpringBootJdk22.repository.RoleRepository;
