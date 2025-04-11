@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Tour List</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" th:href="@{/css/users/home.css}">
+  </head>
+<body>
+<section layout:fragment="content" class="container">
+
+  <!-- Carousel Section -->
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Carousel Items img-->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="/uploads/caseroule1.jpg" class="d-block w-100" alt="Image 1">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Travel experience with VIETNAM AMAZING</h3>
+          <p>Sustainable tourism</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/uploads/caseroule2.jpg" class="d-block w-100" alt="Image 2">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Travel experience with VIETNAM AMAZING</h3>
+          <p>Sustainable tourism</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="/uploads/caseroule3.jpg" class="d-block w-100" alt="Image 3">
+        <div class="carousel-caption d-none d-md-block">
+          <h3>Travel experience with VIETNAM AMAZING</h3>
+          <p>Sustainable tourism</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Board Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>List <b>Tour</b></h2>
+
+        <div class="filter-section p-4 mb-5">
+
+          <form th:action="@{/filter}" method="get" class="row g-3 align-items-end">
+            <!-- Chọn Category -->
+            <div class="col-md-4">
+              <label for="category" class="form-label">Category:</label>
+              <select id="category" name="category" class="form-control">
+                <option value="" selected>Please choose your category</option>
+                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+              </select>
+            </div>
+
+            <!-- Chọn Item Category -->
+            <div class="col-md-4">
+              <label for="itemCategory" class="form-label">Item Category:</label>
+              <select id="itemCategory" name="itemCategory" class="form-control">
+                <option value="" selected>City you want to travel</option>
+              </select>
+            </div>
+
+            <!-- Khoảng giá -->
+            <div class="col-md-4">
+              <label for="priceMin" class="form-label">Min Price:</label>
+              <input type="number" id="priceMin" name="priceMin" class="form-control" placeholder="Min Price">
+            </div>
+            <div class="col-md-4">
+              <label for="priceMax" class="form-label">Max Price:</label>
+              <input type="number" id="priceMax" name="priceMax" class="form-control" placeholder="Max Price">
+            </div>
+
+            <!-- Ngày bắt đầu -->
+            <div class="col-md-4">
+              <label for="startDate" class="form-label">Start Date:</label>
+              <input type="date" id="startDate" name="startDate" class="form-control">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-md-4 d-flex align-items-end">
+              <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Tour List Section -->
+
+    <div class="container">
+      <div class="row" th:each="category : ${categories}">
+        <h2 class="my-4 text-center" th:text="${category.name}">Category Name</h2>
+
+        <div class="row g-4">
+          <!-- Lặp trực tiếp qua tất cả tour trong danh mục mà không nhóm -->
+          <div th:each="tour : ${category.allTours}" class="col-md-4 col-sm-6">
+            <a th:href="@{'/detail/' + ${tour.id}}" class="card h-100 text-decoration-none text-dark">
+              <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Tour Image" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <span th:text="${tour.name}">Tour Name</span>
+                </h5>
+                <div class="star-rating">
+                  <ul class="list-inline">
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                  </ul>
+                </div>
+                <p class="card-text">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span th:text="${tour.itemCategory.name}">City Name</span>
+                </p>
+                <p class="tour-price">
+                  <i class="fas fa-tag"></i>
+                  <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">0</span>
+                  <span class="original-price" th:if="${tour.discountPercentage > 0}">
+                <i class="fas fa-money-bill"></i>
+                <span th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">0</span>
+              </span>
+                  <span class="discount-badge" th:if="${tour.discountPercentage > 0}" th:text="${tour.discountPercentage + '%'}">20%</span>
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Xử lý tải danh sách Item Category dựa trên Category được chọn
+      $('#category').on('change', function () {
+        const categoryId = $(this).val();
+        if (categoryId) {
+          $.ajax({
+            url: '/itemCategory/byCategory/' + categoryId,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              $('#itemCategory').empty().append('<option value="">Vui lòng chọn item category</option>');
+              if (data.length > 0) {
+                $.each(data, function (key, value) {
+                  $('#itemCategory').append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+              } else {
+                $('#itemCategory').append('<option value="">No ItemCategory found</option>');
+              }
+            },
+            error: function () {
+              alert('Unable to load ItemCategory data');
+            }
+          });
+        } else {
+          $('#itemCategory').empty().append('<option value="">Vui lòng chọn item category</option>');
+        }
+      });
+    });
+  </script>
+</section>
+
+</body>
+</html>

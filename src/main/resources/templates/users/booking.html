@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Your Tour</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/users/contact.css}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container contact-container">
+        <div class="company-info">
+            <h2>Company Information</h2>
+            <div class="info-item">
+                <i class="bi bi-geo-alt-fill"></i>
+                <p>
+                    <strong>Headquarters:</strong><br>
+                    Tan Hiep Resettlement Area – Pham Thi Nghia Street – Area 5 – Tan Hiep Ward – Bien Hoa City – Dong Nai Province
+                </p>
+            </div>
+            <div class="info-item">
+                <i class="bi bi-telephone-fill"></i>
+                <p>
+                    <strong>Hotline:</strong><br>
+                    083 734 5939 – 058 566 2585
+                </p>
+            </div>
+            <div class="info-item">
+                <i class="bi bi-envelope-fill"></i>
+                <p>
+                    <strong>Email:</strong><br>
+                    <a href="mailto:vietnamamazing.hcmc@gmail.com">vietnamamazing.hcmc@gmail.com</a>
+                </p>
+            </div>
+            <div class="info-item">
+                <i class="bi bi-facebook"></i>
+                <p>
+                    <strong>Facebook:</strong><br>
+                    <a href="https://www.facebook.com/vietnamamazing" target="_blank">facebook.com/vietnamamazing</a>
+                </p>
+            </div>
+        </div>
+
+    <!-- Booking Form Section -->
+    <div class="contact-form">
+        <h1 class="contact-heading">Book Your Tour</h1>
+        <form th:action="@{/booking}" th:object="${booking}" method="post">
+
+            <!-- Select Tour -->
+            <div class="mb-3" style="position: relative;">
+                <select class="form-select" id="tour" th:field="*{tour.id}" onchange="loadSchedules()" required>
+                    <option value="" selected>-- Choose a Tour --</option>
+                    <option th:each="tour : ${tours}" th:value="${tour.id}" th:text="${tour.name}"></option>
+                </select>
+
+            </div>
+
+            <!-- Select Schedule -->
+            <div class="mb-3" style="position: relative;">
+                <select class="form-select" id="schedule" required>
+                    <option value="" disabled selected>-- Choose a Schedule --</option>
+                </select>
+            </div>
+
+            <!-- Hidden Fields for Start Date and End Date -->
+            <input type="hidden" id="startDate" th:field="*{startDate}">
+            <input type="hidden" id="endDate" th:field="*{endDate}">
+
+            <!-- Full Name -->
+            <div class="mb-3" style="position: relative;">
+                <input type="text" class="form-control" id="fullName" th:field="*{fullName}" placeholder=" " required>
+                <label for="fullName" class="form-label">Full Name</label>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3" style="position: relative;">
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder=" " required>
+                <label for="email" class="form-label">Email Address</label>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="mb-3" style="position: relative;">
+                <input type="tel" class="form-control" id="phoneNumber" th:field="*{phoneNumber}" placeholder=" " required>
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+            </div>
+
+            <!-- Number of People -->
+            <div class="mb-3" style="position: relative;">
+                <input type="number" class="form-control" id="numberOfPeople" th:field="*{numberOfPeople}" placeholder=" " min="1" required>
+                <label for="numberOfPeople" class="form-label">Number of People</label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn contact-submit-btn">Book Now</button>
+            </div>
+        </form>
+    </div>
+    </div>
+<script>
+    function loadSchedules() {
+        const tourId = document.getElementById('tour').value;
+        const scheduleDropdown = document.getElementById('schedule');
+        scheduleDropdown.innerHTML = '<option value="" disabled selected>-- Choose a Schedule --</option>';
+
+        fetch(`/booking/schedules/${tourId}`)
+            .then(response => response.json())
+            .then(schedules => {
+                schedules.forEach(schedule => {
+                    const option = document.createElement('option');
+                    option.value = schedule.id; // Gán ID của schedule
+                    option.dataset.startDate = schedule.startDate;
+                    option.dataset.endDate = schedule.endDate;
+                    option.textContent = `${schedule.startDate} - ${schedule.endDate}`;
+                    scheduleDropdown.appendChild(option);
+                });
+            });
+    }
+
+    document.getElementById('schedule').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        document.getElementById('startDate').value = selectedOption.dataset.startDate;
+        document.getElementById('endDate').value = selectedOption.dataset.endDate;
+    });
+</script>
+</section>
+</body>
+</html>

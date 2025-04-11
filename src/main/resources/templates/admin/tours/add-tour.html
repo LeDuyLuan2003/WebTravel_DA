@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+  <title>Add New Tour</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+  <h1>Add New Tour</h1>
+  <form th:action="@{/admin/tour/add}" th:object="${tour}" method="post"
+        class="needs-validation" enctype="multipart/form-data" novalidate>
+
+    <!-- Tên Tour -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" th:field="*{name}" class="form-control" id="name" required>
+      <div class="text-danger" id="nameError" style="display: none;">Vui lòng nhập tên tour</div>
+    </div>
+
+    <!-- Giá -->
+    <div class="mb-3">
+      <label for="price" class="form-label">Price:</label>
+      <input type="number" th:field="*{price}" class="form-control" id="price" required>
+      <div class="text-danger" id="priceError" style="display: none;">Vui lòng nhập giá</div>
+    </div>
+
+    <!--Person -->
+    <div class="mb-3">
+      <label for="person" class="form-label">Number of Persons:</label>
+      <input type="number" th:field="*{person}" class="form-control" id="person" required>
+      <div class="text-danger" id="personError" style="display: none;">Vui lòng nhập số người</div>
+    </div>
+
+
+    <!-- Phần trăm giảm giá -->
+    <div class="mb-3">
+      <label for="discountPercentage" class="form-label">Discount Percentage:</label>
+      <input type="number" th:field="*{discountPercentage}" class="form-control" id="discountPercentage" min="0" max="100" step="1">
+      <div class="text-danger" id="discountPercentageError" style="display: none;">Vui lòng nhập phần trăm giảm giá hợp lệ</div>
+    </div>
+
+    <!-- Giá sau khi giảm -->
+    <div class="mb-3">
+      <label for="finalPrice" class="form-label">Final Price:</label>
+      <input type="text" th:field="*{finalPrice}" class="form-control" id="finalPrice" readonly>
+    </div>
+
+    <!-- Chọn Category -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Category:</label>
+      <select id="category" name="category" class="form-control" required>
+        <option value="" selected>Vui lòng chọn category</option>
+        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+      </select>
+      <div class="text-danger" id="categoryError" style="display: none;">Vui lòng chọn category</div>
+    </div>
+
+    <!-- Chọn Item Category -->
+    <div class="mb-3">
+      <label for="itemCategory" class="form-label">Item Category:</label>
+      <select id="itemCategory" name="itemCategory" class="form-control" required>
+        <option value="" selected>Vui lòng chọn item category</option>
+      </select>
+      <div class="text-danger" id="itemCategoryError" style="display: none;">Vui lòng chọn item category</div>
+    </div>
+
+    <!-- Mô tả Tour -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea th:field="*{description}" class="form-control" id="description" required></textarea>
+      <div class="text-danger" id="descriptionError" style="display: none;">Vui lòng nhập mô tả</div>
+    </div>
+
+    <!-- Avatar cho Tour -->
+    <div class="mb-3">
+      <label for="avatarFile" class="form-label">Avatar:</label>
+      <input type="file" name="avatarFile" class="form-control" id="avatarFile">
+    </div>
+
+    <!-- Các ảnh bổ sung -->
+    <div class="mb-3">
+      <label for="imageFiles" class="form-label">Other Images:</label>
+      <input type="file" name="imageFiles" class="form-control" id="imageFiles" multiple>
+    </div>
+
+    <!-- Nút Submit -->
+    <button type="submit" class="btn btn-primary">Add Tour</button>
+    <a th:href="@{/admin/tour}" class="btn btn-link">Cancel</a>
+  </form>
+
+  <script>
+    $(document).ready(function () {
+      // Xử lý tải danh sách Item Category dựa trên Category được chọn
+      $('#category').on('change', function () {
+        const categoryId = $(this).val();
+        if (categoryId) {
+          $.ajax({
+            url: '/itemCategory/byCategory/' + categoryId,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              $('#itemCategory').empty().append('<option value="">Vui lòng chọn item category</option>');
+              if (data.length > 0) {
+                $.each(data, function (key, value) {
+                  $('#itemCategory').append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+              } else {
+                $('#itemCategory').append('<option value="">No ItemCategory found</option>');
+              }
+            },
+            error: function () {
+              alert('Unable to load ItemCategory data');
+            }
+          });
+        } else {
+          $('#itemCategory').empty().append('<option value="">Vui lòng chọn item category</option>');
+        }
+      });
+
+      // Tự động tính toán giá sau khi giảm
+      $('#discountPercentage, #price').on('input', function () {
+        const price = parseFloat($('#price').val()) || 0;
+        const discount = parseFloat($('#discountPercentage').val()) || 0;
+        const finalPrice = price - (price * discount / 100);
+        $('#finalPrice').val(finalPrice > 0 ? Math.ceil(finalPrice) : "0");
+      });
+
+      // Xử lý kiểm tra các trường trước khi submit
+      $('form').on('submit', function (e) {
+        let isValid = true;
+
+        // Kiểm tra trường Price
+          const price = parseFloat($('#price').val());
+          if (!price || price <= 0) { // Giá phải lớn hơn 0
+              $('#priceError').text('Vui lòng nhập giá hợp lệ lớn hơn 0').show();
+              isValid = false;
+          } else {
+              $('#priceError').hide();
+          }
+
+          // Kiểm tra trường Discount Percentage
+          const discountPercentage = parseFloat($('#discountPercentage').val());
+          if (isNaN(discountPercentage) || discountPercentage < 0 || discountPercentage > 100) { // Giá trị giảm giá phải từ 0-100
+              $('#discountPercentageError').text('Vui lòng nhập phần trăm giảm giá từ 0 đến 100').show();
+              isValid = false;
+          } else {
+              $('#discountPercentageError').hide();
+          }
+
+        // Kiểm tra trường Name
+        if (!$('#name').val()) {
+          $('#nameError').show();
+          isValid = false;
+        } else {
+          $('#nameError').hide();
+        }
+
+        // Kiểm tra trường Category
+        if (!$('#category').val()) {
+          $('#categoryError').show();
+          isValid = false;
+        } else {
+          $('#categoryError').hide();
+        }
+
+        // Kiểm tra trường Item Category
+        if (!$('#itemCategory').val()) {
+          $('#itemCategoryError').show();
+          isValid = false;
+        } else {
+          $('#itemCategoryError').hide();
+        }
+
+        // Kiểm tra trường Description
+        if (!$('#description').val()) {
+          $('#descriptionError').show();
+          isValid = false;
+        } else {
+          $('#descriptionError').hide();
+        }
+
+        // Ngăn gửi form nếu có lỗi
+        if (!isValid) e.preventDefault();
+      });
+    });
+  </script>
+</section>
+</body>
+</html>
