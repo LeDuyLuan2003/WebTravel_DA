@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link rel="stylesheet" th:href="@{/css/users/home.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container my-5">
+        <h2>Search Results</h2>
+        <div class="row">
+            <div th:each="tour : ${tours}" class="col-md-4 mb-4">
+                <!-- Updated Card -->
+                <a th:href="@{'/detail/' + ${tour.id}}" class="card h-100 text-decoration-none text-dark">
+                    <img th:src="@{'/uploads/' + ${tour.avatar}}" alt="Tour Image" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span th:text="${tour.name}">Tour Name</span>
+                        </h5>
+                        <div class="star-rating">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt"></i> <!-- Icon before city name -->
+                            <span th:text="${tour.itemCategory.name}">City Name</span>
+                        </p>
+                        <p class="tour-price">
+                            <i class="fas fa-tag"></i> <!-- Icon before price -->
+                            <span th:text="${#numbers.formatDecimal(tour.finalPrice, 0, 'POINT', 0, 'POINT')}">0</span>
+                            <span class="original-price" th:if="${tour.discountPercentage > 0}">
+                            <i class="fas fa-money-bill"></i> <!-- Icon before original price -->
+                            <span th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}">0</span>
+                        </span>
+                            <span class="discount-badge" th:if="${tour.discountPercentage > 0}" th:text="${tour.discountPercentage + '%'}">20%</span>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

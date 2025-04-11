@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+    <title>Add Item Category</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script></head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+    <h1 class="mb-4">Add Item Category</h1>
+    <form th:action="@{/admin/itemCategory/add}" th:object="${itemCategory}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Item Category Name:</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" required />
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name is required.</div>
+        </div>
+        <div class="mb-3">
+            <label for="Category" class="form-label">Category:</label>
+            <select th:field="*{Category}" class="form-control" id="Category">
+                <option th:each="Category : ${Categories}" th:value="${Category.id}" th:text="${Category.name}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="javascript:history.back()" class="btn btn-link">Cancel</a>
+    </form>
+</section>
+</body>
+</html>

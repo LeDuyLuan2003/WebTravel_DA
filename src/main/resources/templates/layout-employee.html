@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="/css/layout-admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        .logo-circle {
+    border-radius: 50%; /* Tạo hình tròn */
+    width: 100px; /* Kích thước hình ảnh (tùy chỉnh theo yêu cầu) */
+    height: 100px; /* Đảm bảo hình ảnh giữ tỷ lệ hình tròn */
+    object-fit: cover; /* Cắt hình ảnh nếu cần để vừa khung tròn */
+}
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="/employee" class="simple-text">
+                    <img th:src="@{/uploads/amazingLogo.jpg}"
+                         alt="VIETNAM AMAZING LOGO"
+                         class="logo-circle"
+                         style="width: 100%; height: auto; display: block;">                </a>
+            </div>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/employee/tour">
+                        <i class="fas fa-map-marked-alt"></i> <!-- Icon phù hợp với Tour -->
+                        <p>Tour</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employee/booking">
+                        <i class="fas fa-calendar-check"></i> <!-- Icon phù hợp với Booking -->
+                        <p>Booking</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employee/contact">
+                        <i class="fas fa-address-book"></i> <!-- Icon phù hợp với Contact -->
+                        <p>Contact</p>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display: none;" id="logout-form">
+                        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                    </form>
+                    <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i> <!-- Icon phù hợp với Logout -->
+                        <p>Logout</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Main Panel -->
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a class="navbar-brand" href="#">Dashboard</a>
+            <button class="navbar-toggler" type="button" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        <!-- Content -->
+        <div class="content">
+            <section layout:fragment="custom-content">
+                <!-- Custom content will be inserted here -->
+            </section>
+        </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Creative Nhom 1, made with love for a better web</p>
+        </footer>
+    </div>
+</div>
+
+<script>
+    function toggleSidebar() {
+        document.querySelector('.sidebar').classList.toggle('active');
+    }
+</script>
+</body>
+</html>

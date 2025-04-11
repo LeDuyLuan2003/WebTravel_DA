@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="container mt-5">
+        <h1>Edit User</h1>
+        <form id="editUserForm" th:action="@{/admin/employees/edit/{id}(id=${user.id})}" th:object="${user}" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" th:field="*{username}" class="form-control" id="username" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone:</label>
+                <input type="text" th:field="*{phone}" class="form-control" id="phone" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" required>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="provider">Provider</label>
+                <input type="text" class="form-control" id="provider" th:field="*{provider}">
+            </div>
+
+            <div class="form-group">
+                <label for="roles">Roles</label>
+                <select multiple class="form-control" id="roles" th:field="*{roles}">
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"
+                            th:selected="${user.roles.contains(role.id)}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password (Leave blank to keep current password):</label>
+                <input type="password" class="form-control" id="password" th:field="*{password}">
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirmPassword">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="locked" th:field="*{locked}">
+                <label class="form-check-label" for="locked">Account Locked</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="javascript:history.back()" class="btn btn-link">Cancel</a>
+        </form>
+    </div>
+</section>
+
+<script>
+    document.getElementById("editUserForm").onsubmit = function(event) {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        if (password && password !== confirmPassword) { // Chỉ kiểm tra khi có mật khẩu mới
+            alert("Passwords do not match.");
+            event.preventDefault(); // Ngăn gửi form nếu mật khẩu không khớp
+        }
+    };
+</script>
+</body>
+</html>
