@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-employee}">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+    <h1>Contact List</h1>
+
+    <!-- Form lọc theo ngày -->
+    <div class="mb-3">
+        <form id="filterForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="specificDate" class="form-label">Select Date:</label>
+                    <input type="date" id="specificDate" name="specificDate" class="form-control">
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="button" class="btn btn-primary" id="filterButton">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table id="contactTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Created Date</th>
+            <th>Responded</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="contact : ${contacts}">
+            <td th:text="${contact.id}"></td>
+            <td th:text="${contact.name}"></td>
+            <td th:text="${contact.email}"></td>
+            <td th:text="${contact.phone}"></td>
+            <td th:text="${contact.subject}"></td>
+            <td th:text="${contact.message}"></td>
+            <td th:text="${#temporals.format(contact.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td>
+                <form th:action="@{/employee/contact/updateStatus}" method="post" style="display:inline;">
+                    <input type="hidden" th:value="${contact.id}" name="contactId">
+                    <select name="responded" class="form-select form-select-sm status-dropdown" onchange="this.form.submit()">
+                        <option value="true" th:selected="${contact.responded}">Yes</option>
+                        <option value="false" th:selected="${!contact.responded}">No</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+<script>
+    $(document).ready(function () {
+        const table = $('#contactTable').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+
+        });
+
+        // Custom filter for a specific date
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            const specificDate = $('#specificDate').val();
+
+            if (!specificDate) {
+                return true; // Show all rows if no date is selected
+            }
+
+            const createdDate = new Date(data[6].split(' ')[0]); // Get "yyyy-MM-dd"
+            const selectedDate = new Date(specificDate);
+
+            // Check if the dates match exactly
+            return createdDate.toDateString() === selectedDate.toDateString();
+        });
+
+        // Filter button click event
+        $('#filterButton').on('click', function () {
+            table.draw(); // Redraw the table
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnam Amazing - Sustainable Tourism</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/users/about-us.css}">
+    <style>
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content" class="container mt-5">
+
+    <!-- Banner Section -->
+    <section class="banner-title container d-flex align-items-center fade-in">
+        <div class="text-content col-md-6">
+            <h2>Vietnam Amazing - Sustainable Tourism</h2>
+            <p>Utilizing cultural and natural resources for sustainable development, spreading Vietnamese culture worldwide</p>
+        </div>
+        <div class="image-content col-md-6">
+            <img src="/uploads/amazingImg.jpg" alt="Vietnam Amazing" class="img-fluid">
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="section-content container fade-in">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title">About Us</h2>
+                <p>Vietnam Amazing was established with the goal of promoting sustainable tourism, leveraging Vietnam's cultural and natural resources. We make full use of available resources to spread Vietnamese culture to international friends, while ensuring the tourism environment remains unharmed and local lives improve through community tourism development.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision & Mission Section -->
+    <section class="vision-mission container fade-in">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="section-title">Vision & Mission</h2>
+                <p>Developing tourism products based on available resources and highlighting the cultural and historical values of Vietnam to both domestic and international tourists. We collaborate with local communities to restore historical sites, traditional crafts, and culinary culture, fostering sustainable community tourism development.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="/uploads/vision.png" alt="Vision and Mission" class="img-fluid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values Section -->
+    <section class="core-values container fade-in">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="section-title">Core Values</h2>
+                <p>Vietnam Amazing operates under the motto "Renewing the Old," emphasizing environmental protection and preserving Vietnam's traditional cultural identity.</p>
+                <ul>
+                    <li>Responsibility to customers and the community.</li>
+                    <li>Innovation and creativity.</li>
+                    <li>Sustainable development and environmental protection.</li>
+                    <li>Respect and preservation of Vietnamese cultural traditions.</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <img src="/uploads/value.png" alt="Core Values" class="img-fluid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Get In Touch Section -->
+    <section class="get-in-touch fade-in">
+        <h2>Contact Us</h2>
+        <p>One of our experts is always ready to assist you. Reach out to us for more details about Vietnam Amazing tours and services.</p>
+        <a th:href="@{/contact}" class="btn btn-light">Contact Us</a>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+                });
+            });
+            document.querySelectorAll(".fade-in").forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

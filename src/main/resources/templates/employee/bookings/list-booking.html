@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-employee}">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact List</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        .filter-section input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+    <h1>Booking List</h1>
+
+
+    <div class="mb-3">
+        <form id="filterForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="specificDate" class="form-label">Select Date:</label>
+                    <input type="date" id="specificDate" name="specificDate" class="form-control">
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="button" class="btn btn-primary" id="filterButton">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Booking Table -->
+    <table id="bookingTable" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tour</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Person</th>
+            <th>StartDate</th>
+            <th>EndDate...</th>
+            <th>CreateDate</th>
+            <th>Confirmed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Booking data will be populated here from the server -->
+        <tr th:each="booking : ${bookings}">
+            <td th:text="${booking.id}"></td>
+            <td th:text="${booking.tour.name}"></td>
+            <td th:text="${booking.fullName}"></td>
+            <td th:text="${booking.email}"></td>
+            <td th:text="${booking.phoneNumber}"></td>
+            <td th:text="${booking.numberOfPeople}"></td>
+            <td th:text="${booking.startDate}"></td>
+            <td th:text="${booking.endDate}"></td>
+            <td th:text="${booking.bookingDate}"></td>
+            <td>
+                <form th:action="@{/employee/booking/updateStatus}" method="post" style="display:inline;">
+                    <input type="hidden" th:value="${booking.id}" name="bookingId">
+                    <select name="status" class="form-select form-select-sm status-dropdown" onchange="this.form.submit()">
+                        <option value="true" th:selected="${booking.status}">Yes</option>
+                        <option value="false" th:selected="${!booking.status}">No</option>
+                    </select>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+   <script>
+    $(document).ready(function () {
+        const table = $('#bookingTable').DataTable({
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+        });
+
+        // Custom filter for a specific date
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            const specificDate = $('#specificDate').val();
+
+            if (!specificDate) {
+                return true; // Show all rows if no date is selected
+            }
+
+            const bookingDate = new Date(data[8]); // Get "Booking Date" value (column index 8)
+            const selectedDate = new Date(specificDate);
+
+            // Compare the exact date
+            return bookingDate.toDateString() === selectedDate.toDateString();
+        });
+
+        // Filter when clicking the button
+        $('#filterButton').on('click', function () {
+            table.draw(); // Redraw the table
+        });
+    });
+</script>
+</section>
+</body>
+</html>

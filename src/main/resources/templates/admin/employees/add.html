@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New User</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+    <h1>Add New User</h1>
+    <form id="addUserForm" th:action="@{/admin/employees/add}" th:object="${user}" method="post" class="needs-validation" novalidate>
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" th:field="*{username}" class="form-control" id="username" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone:</label>
+            <input type="text" th:field="*{phone}" class="form-control" id="phone" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" th:field="*{email}" class="form-control" id="email" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="provider" class="form-label">Provider:</label>
+            <input type="text" th:field="*{provider}" class="form-control" id="provider">
+        </div>
+
+        <div class="mb-3">
+            <label for="roles" class="form-label">Roles:</label>
+            <select multiple th:field="*{roles}" class="form-control" id="roles">
+                <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password:</label>
+            <input type="password" id="confirmPassword" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="javascript:history.back()" class="btn btn-link">Cancel</a>
+    </form>
+</section>
+
+<script>
+    document.getElementById("addUserForm").onsubmit = function(event) {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            event.preventDefault(); // Ngăn gửi form nếu mật khẩu không khớp
+        }
+    };
+</script>
+</body>
+</html>

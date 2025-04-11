@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+    <h1>Tour Schedules</h1>
+    <a class="btn btn-primary mb-3" th:href="@{/admin/tourSchedules/new}">Add New Schedule</a>
+    <table id="scheduleTable" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tour Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="schedule : ${schedules}">
+            <td th:text="${schedule.id}"></td>
+            <td th:text="${schedule.tour.name}"></td>
+            <td th:text="${schedule.startDate}"></td>
+            <td th:text="${schedule.endDate}"></td>
+            <td>
+                <button type="button" class="btn btn-warning btn-sm" th:onclick="'window.location.href=\'/admin/tourSchedules/edit/' + ${schedule.id} + '\';'">Edit</button>
+                <button type="button" class="btn btn-danger btn-sm" th:onclick="'window.location.href=\'/admin/tourSchedules/delete/' + ${schedule.id} + '\';'">Delete</button>            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function () {
+            $('#scheduleTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true
+            });
+        });
+    </script>
+
+</section>
+</body>
+</html>

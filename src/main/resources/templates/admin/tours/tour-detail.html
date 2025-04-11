@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+  <meta charset="UTF-8">
+  <title>Tour Detail</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <style>
+    .carousel-item img {
+        width: 100%; /* Chiều rộng của ảnh chiếm toàn bộ chiều rộng carousel */
+        height: 500px; /* Chiều cao của ảnh */
+        object-fit: cover; /* Giúp đảm bảo ảnh luôn vừa vặn mà không bị biến dạng */
+    }
+    .thumbnail-images {
+        display: flex;
+        justify-content: center; /* Căn giữa các ảnh nhỏ */
+        gap: 10px; /* Khoảng cách giữa các ảnh */
+    }
+
+    .thumbnail-images img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<section layout:fragment="custom-content" class="container">
+
+  <h1>Tour Detail</h1>
+
+  <div th:if="${tour != null}">
+    <div class="tour-detail-container">
+      <!-- Avatar của tour và các hình ảnh khác dưới dạng carousel -->
+      <div id="tourCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <!-- Nút điều hướng -->
+          <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#tourCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+          <!-- Hiển thị hình ảnh chính của tour -->
+          <div class="carousel-item active">
+            <img th:src="@{'/uploads/' + ${tour.avatar}}" class="img-fluid d-block w-100" alt="Tour Image">
+          </div>
+
+          <!-- Hiển thị các hình ảnh khác của tour -->
+          <div th:each="image, iterStat : ${tour.images}" class="carousel-item">
+            <img th:src="@{'/uploads/' + ${image.url}}" class="d-block w-100" alt="Tour Image">
+          </div>
+        </div>
+
+        <!-- Điều khiển carousel -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#tourCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#tourCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <!-- Hiển thị các ảnh nhỏ bên dưới (thumbnail) để điều hướng -->
+      <div class="thumbnail-images mt-3">
+        <img th:if="${tour.avatar != null}" th:src="@{'/uploads/' + ${tour.avatar}}" alt="Avatar thumbnail" class="img-thumbnail" data-bs-target="#tourCarousel" data-bs-slide-to="0" aria-current="true">
+
+        <div th:each="image, iterStat : ${tour.images}">
+          <img th:src="@{'/uploads/' + ${image.url}}" class="img-thumbnail" alt="Tour thumbnail" data-bs-target="#tourCarousel" th:data-bs-slide-to="${iterStat.index + 1}">
+        </div>
+      </div>
+
+      <!-- Thông tin tour -->
+      <div class="tour-detail-info mt-3">
+        <h2 th:text="${tour.name}">Tour Name</h2>
+        <p><strong>Person:</strong> <span th:text="${tour.person}">Person</span></p>
+        <p><strong>Price:</strong> <span th:text="${#numbers.formatDecimal(tour.price, 0, 'POINT', 0, 'POINT')}"></span></p>
+        <p><strong>Category:</strong> <span th:text="${tour.itemCategory.name}">Category</span></p>
+        <p><strong>Description:</strong> <span th:text="${tour.description}">Description</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${tour == null}">
+    <p>Tour not found or unavailable.</p>
+  </div>
+
+  <a href="javascript:history.back()" class="btn btn-secondary mt-3">Back to Product List</a>
+</section>
+</body>
+</html>
