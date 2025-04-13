@@ -1,2 +1,2 @@
 # WebTravel
-Spring boot_Mysql_Junit_Mockito_CiCD
+Spring boot_Mysql_Junit_Mockito_CICD
