@@ -37,6 +37,9 @@ jobs:
         run: cat target/surefire-reports/*.txt || true
 
 
+
+
+#
 #  deploy:
 #    needs: test  # Chỉ chạy job deploy nếu job test thành công
 #    runs-on: ubuntu-latest
