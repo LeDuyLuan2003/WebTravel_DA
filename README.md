@@ -6,9 +6,9 @@ DACN_WEBTRAVEL is a web-based travel application designed to provide users with 
 
 ## Language Composition
 
-- **HTML:** 56.7%
-- **Java:** 37%
-- **CSS:** 6.3%
+- **HTML:**
+- **Java:** 
+- **CSS:**
 
 ## Features
 
