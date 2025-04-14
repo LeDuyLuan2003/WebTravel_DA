@@ -195,9 +195,12 @@ public class TourController {
     // Save file to "static/uploads"
     private String saveFile(MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get("uploads", fileName);
-        Files.createDirectories(filePath.getParent());
+        String uploadDir = "/home/binhan/cicd-deploy/uploads/";
+        Path uploadPath = Paths.get(uploadDir);
+        Files.createDirectories(uploadPath);
+        Path filePath = uploadPath.resolve(fileName);
         Files.write(filePath, file.getBytes());
         return fileName;
     }
+
 }
