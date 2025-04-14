@@ -57,7 +57,7 @@ public class HomeController {
         }
 
         model.addAttribute("categories", categories);
-        return "/users/home";
+        return "users/home";
     }
 
 
