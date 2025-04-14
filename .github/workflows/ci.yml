@@ -100,7 +100,7 @@ jobs:
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST '
             echo "Killing old app if exists..."
             pkill -f "java -jar" || true
-            cd '"$REMOTE_DIR"'
-            echo "Starting new app..."
+            cd $REMOTE_DIR
+            echo 'Starting new app...'
             nohup java -jar SpringBootJdk22-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
-          '
+          "
