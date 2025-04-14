@@ -80,5 +80,9 @@ jobs:
           REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
         run: |
           sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no target/*.jar $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "pkill -f 'java -jar' || true; nohup java -jar $REMOTE_DIR/*.jar > $REMOTE_DIR/app.log 2>&1 &"
-
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
+            pkill -f 'java -jar' || true
+            sleep 2
+            APP_JAR=\$(ls $REMOTE_DIR/*.jar | head -n1)
+            nohup java -jar \$APP_JAR > $REMOTE_DIR/app.log 2>&1 &
+          "
