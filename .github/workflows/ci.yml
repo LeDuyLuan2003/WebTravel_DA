@@ -80,22 +80,14 @@ jobs:
           REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
         run: |
           echo "Uploading to $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR"
+          ls -l target
           JAR_FILE=$(ls target/*.jar | head -n1)
+          echo "Found JAR: $JAR_FILE"
       
-          # Tạo thư mục nếu chưa có
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "mkdir -p $REMOTE_DIR"
+          # debug thử SSH có thấy thư mục không
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "ls -ld $REMOTE_DIR || mkdir -p $REMOTE_DIR"
       
-          # Stop app cũ
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "pkill -f 'java -jar' || true"
-          
-          sleep 3  # đảm bảo đã kill xong
+          # CHẠY SCP VỚI DEBUG
+          sshpass -v -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no "$JAR_FILE" $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
+        
       
-          # Copy file mới
-          sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no "$JAR_FILE" $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
-      
-          # Start lại app
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
-            JAR_PATH=\$(ls $REMOTE_DIR/*.jar | head -n1)
-            nohup java -jar \$JAR_PATH > \$JAR_PATH.log 2>&1 < /dev/null &
-            disown
-          "
