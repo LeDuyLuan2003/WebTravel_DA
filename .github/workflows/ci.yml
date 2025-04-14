@@ -89,4 +89,13 @@ jobs:
       
           # CHẠY SCP VỚI DEBUG
           sshpass -v -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no "$JAR_FILE" $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
+          # Stop app đang chạy (nếu có)
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "pkill -f 'java -jar' || true"
+          
+          # Đợi 2s rồi chạy lại app
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
+            sleep 2
+            JAR_PATH=\$(ls $REMOTE_DIR/*.jar | head -n1)
+            nohup java -jar \$JAR_PATH > $REMOTE_DIR/app.log 2>&1 &
+          "
 
