@@ -37,14 +37,14 @@ public class TourController {
     @GetMapping()
     public String showProductList(Model model) {
         model.addAttribute("tours", tourService.getAllTours());
-        return "/admin/tours/tour-list";
+        return "admin/tours/tour-list";
     }
 
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("tour", new Tour());
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "/admin/tours/add-tour";
+        return "admin/tours/add-tour";
     }
 
     @PostMapping("/add")
@@ -57,7 +57,7 @@ public class TourController {
             System.out.println("price từ form khi add: " + tour.getPrice());
             System.out.println("finalprice từ form khi add: " + tour.getFinalPrice());
             model.addAttribute("categories", categoryService.getAllCategories());
-            return "/admin/tours/add-tour";
+            return "admin/tours/add-tour";
         }
 
         // Calculate finalPrice based on discountPercentage and price
@@ -112,7 +112,7 @@ public class TourController {
         model.addAttribute("selectedCategory", selectedCategory); // Category hiện tại
         model.addAttribute("itemCategories", itemCategories);     // Danh sách ItemCategory thuộc Category
 
-        return "/admin/tours/update-tour";
+        return "admin/tours/update-tour";
     }
 
     @PostMapping("/update/{id}")
@@ -189,7 +189,7 @@ public class TourController {
     public String searchProductsByName(@RequestParam("name") String name, Model model) {
         List<Tour> searchResults = tourService.findToursByName(name);
         model.addAttribute("products", searchResults);
-        return "/admin/tours/tour-list";
+        return "admin/tours/tour-list";
     }
 
     // Save file to "static/uploads"

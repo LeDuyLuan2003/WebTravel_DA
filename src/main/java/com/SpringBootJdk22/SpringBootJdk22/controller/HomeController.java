@@ -70,7 +70,7 @@ public class HomeController {
         Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
-        return "/users/tour-detail";
+        return "users/tour-detail";
     }
     @GetMapping("/aboutUs")
     public String showAboutUs(Model model) {
@@ -84,7 +84,7 @@ public class HomeController {
     @GetMapping("/contact")
     public String showContact(Model model) {
         model.addAttribute("contact", new Contact());
-        return "/users/contact";
+        return "users/contact";
     }
 
     @PostMapping("/contact")
@@ -112,7 +112,7 @@ public class HomeController {
 
         // Tạo Booking object để bind dữ liệu từ form
         model.addAttribute("booking", new Booking());
-        return "/users/booking"; // Đường dẫn đến file Thymeleaf của form booking
+        return "users/booking"; // Đường dẫn đến file Thymeleaf của form booking
     }
 
     // API: Lấy danh sách lịch trình (TourSchedule) theo Tour ID
@@ -148,12 +148,12 @@ public class HomeController {
                 parsedStartDate = LocalDate.parse(startDate); // Chuyển từ String sang LocalDate
             } catch (DateTimeParseException e) {
                 model.addAttribute("errorMessage", "Invalid start date format. Expected yyyy-MM-dd.");
-                return "/users/search"; // Trả về trang lỗi
+                return "users/search"; // Trả về trang lỗi
             }
         }
         List<Tour> tours = tourService.filterTours(priceMin, priceMax, parsedStartDate, categoryName, itemCategoryName);
         model.addAttribute("tours", tours);
-        return "/users/search";
+        return "users/search";
     }
 
 

@@ -46,7 +46,7 @@ public class EmployeeController {
     @GetMapping("/tour")
     public String showProductList(Model model) {
         model.addAttribute("tours", tourService.getAllTours());
-        return "/employee/tours/tour-list";
+        return "employee/tours/tour-list";
     }
 
 
@@ -62,7 +62,7 @@ public class EmployeeController {
     public String showAddForm(Model model) {
         model.addAttribute("tour", new Tour());
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "/employee/tours/add-tour";
+        return "employee/tours/add-tour";
     }
 
     @PostMapping("/tour/add")
@@ -73,7 +73,7 @@ public class EmployeeController {
                              Model model) {
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.getAllCategories());
-            return "/employee/tours/add-tour";
+            return "employee/tours/add-tour";
         }
 
         // Calculate finalPrice based on discountPercentage and price
