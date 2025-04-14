@@ -4,6 +4,7 @@
 
 WEBTRAVEL is a web-based travel application designed to provide users with a seamless experience for planning and booking their travels. The project is built using Spring Boot for the backend, and HTML, CSS for the frontend.
 
+
 ## Language Composition
 
 - **HTML:**
