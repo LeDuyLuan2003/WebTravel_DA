@@ -100,7 +100,7 @@ public class HomeController {
 
     @GetMapping("/blog")
     public String showBlog(Model model) {
-        return "/users/blog";
+        return "users/blog";
     }
 
     // Hiển thị form Booking
