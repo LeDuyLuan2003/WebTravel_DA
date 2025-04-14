@@ -57,7 +57,7 @@ public class HomeController {
         }
 
         model.addAttribute("categories", categories);
-        return "/users/home";
+        return "users/home";
     }
 
 
@@ -74,11 +74,11 @@ public class HomeController {
     }
     @GetMapping("/aboutUs")
     public String showAboutUs(Model model) {
-        return "/users/about-us";
+        return "users/about-us";
     }
     @GetMapping("/vehicle")
     public String showVehicle(Model model) {
-        return "/users/vehicle";
+        return "users/vehicle";
     }
 
     @GetMapping("/contact")
@@ -160,7 +160,7 @@ public class HomeController {
     //exception
     @RequestMapping("/403")
     public String accessDenied() {
-        return "/403"; // Trả về tên của file HTML chứa nội dung lỗi 403
+        return "403"; // Trả về tên của file HTML chứa nội dung lỗi 403
     }
 
 }
