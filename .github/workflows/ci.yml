@@ -63,6 +63,14 @@ jobs:
 
       - name: Install sshpass
         run: sudo apt-get update && sudo apt-get install -y sshpass
+        
+      - name: Test SSH connection
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "hostname"
 
       - name: Deploy .jar to server
         env:
@@ -74,3 +82,4 @@ jobs:
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "mkdir -p $REMOTE_DIR"
           sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no target/*.jar $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "pkill -f 'java -jar' || true; nohup java -jar $REMOTE_DIR/*.jar > $REMOTE_DIR/app.log 2>&1 &"
+      
