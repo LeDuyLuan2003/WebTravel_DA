@@ -4,6 +4,7 @@ name: CI/CD - Build, Test & Deploy Spring Boot
 #  push:
 #    branches:
 #      - main  # Workflow sẽ chạy khi có code được đẩy lên nhánh `main`
+
 on:
   workflow_dispatch:  # Chạy thủ công từ GitHub Actions tab
   
