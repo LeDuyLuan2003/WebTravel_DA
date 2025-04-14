@@ -1,48 +1,42 @@
-#name: CI/CD - Build, Test & Deploy Spring Boot
-#
-#on:
+name: CI/CD - Build, Test & Deploy Spring Boot
+
+# on:
 #  push:
 #    branches:
 #      - main  # Workflow sẽ chạy khi có code được đẩy lên nhánh `main`
-#
-#jobs:
-#  test:
-#    runs-on: ubuntu-latest  # Chạy workflow trên môi trường Ubuntu mới nhất
-#    services:
-#      mysql:
-#        image: mysql:8  # Khởi chạy một container MySQL 8
-#        env:
-#          MYSQL_DATABASE: webtourism  # Tạo database có tên `webtourism`
-#          MYSQL_ROOT_PASSWORD: luanml001  # Đặt mật khẩu root (Lưu ý: Nên dùng GitHub Secrets thay vì để lộ trực tiếp)
-#        ports:
-#          - 3306:3306  # Mở cổng 3306 để Spring Boot có thể kết nối với MySQL
-#        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=5s --health-timeout=5s --health-retries=40
-#        # Kiểm tra sức khỏe của MySQL, thử kết nối trong 40 lần với khoảng cách 5 giây
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v3  # Lấy code từ repository về môi trường runner
-#
-#      - name: Setup JDK 17
-#        uses: actions/setup-java@v3  # Cài đặt Java JDK 17
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'  # Dùng Temurin JDK (phiên bản OpenJDK được bảo trì tốt)
-#
-#      - name: Run Tests
-#        run: mvn test  # Chạy bộ test của Maven để kiểm tra code
-#
-#      - name: Debug Surefire Test Reports
-#        if: failure()  # Nếu bước `mvn test` thất bại, in ra log test từ Surefire
-#        run: cat target/surefire-reports/*.txt || true
-#
-#
-
-
-name: CI/CD - Build, Test & Deploy Spring Boot
-
 on:
   workflow_dispatch:  # Chạy thủ công từ GitHub Actions tab
+  
+jobs:
+ test:
+   runs-on: ubuntu-latest  # Chạy workflow trên môi trường Ubuntu mới nhất
+   services:
+     mysql:
+       image: mysql:8  # Khởi chạy một container MySQL 8
+       env:
+         MYSQL_DATABASE: webtourism  # Tạo database có tên `webtourism`
+         MYSQL_ROOT_PASSWORD: luanml001  # Đặt mật khẩu root (Lưu ý: Nên dùng GitHub Secrets thay vì để lộ trực tiếp)
+       ports:
+         - 3306:3306  # Mở cổng 3306 để Spring Boot có thể kết nối với MySQL
+       options: --health-cmd="mysqladmin ping -h localhost" --health-interval=5s --health-timeout=5s --health-retries=40
+       # Kiểm tra sức khỏe của MySQL, thử kết nối trong 40 lần với khoảng cách 5 giây
+
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v3  # Lấy code từ repository về môi trường runner
+
+     - name: Setup JDK 17
+       uses: actions/setup-java@v3  # Cài đặt Java JDK 17
+       with:
+         java-version: '17'
+         distribution: 'temurin'  # Dùng Temurin JDK (phiên bản OpenJDK được bảo trì tốt)
+
+     - name: Run Tests
+       run: mvn test  # Chạy bộ test của Maven để kiểm tra code
+
+     - name: Debug Surefire Test Reports
+       if: failure()  # Nếu bước `mvn test` thất bại, in ra log test từ Surefire
+       run: cat target/surefire-reports/*.txt || true
 
 jobs:
   deploy:
