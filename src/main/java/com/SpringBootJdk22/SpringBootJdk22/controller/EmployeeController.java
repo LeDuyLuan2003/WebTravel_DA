@@ -40,7 +40,7 @@ public class EmployeeController {
 
     @GetMapping
     public String employee() {
-        return "/layout-employee";
+        return "layout-employee";
     }
 
     @GetMapping("/tour")
@@ -55,7 +55,7 @@ public class EmployeeController {
         Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
-        return "/users/tour-detail";
+        return "users/tour-detail";
     }
 
     @GetMapping("/tour/add")
