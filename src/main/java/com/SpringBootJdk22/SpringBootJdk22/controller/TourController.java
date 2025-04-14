@@ -182,7 +182,7 @@ public class TourController {
         Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
-        return "/admin/tours/tour-detail";
+        return "admin/tours/tour-detail";
     }
 
     @GetMapping("/search")
