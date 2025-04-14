@@ -91,16 +91,16 @@ jobs:
           sshpass -v -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no "$JAR_FILE" $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
 
       - name: Restart Spring Boot App
-          env:
-            SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-            REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-            REMOTE_USER: ${{ secrets.REMOTE_USER }}
-            REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
-          run: |
-            sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST '
-              echo "Killing old app if exists..."
-              pkill -f "java -jar" || true
-              cd '"$REMOTE_DIR"'
-              echo "Starting new app..."
-              nohup java -jar SpringBootJdk22-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
-            '
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST '
+            echo "Killing old app if exists..."
+            pkill -f "java -jar" || true
+            cd '"$REMOTE_DIR"'
+            echo "Starting new app..."
+            nohup java -jar SpringBootJdk22-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+          '
