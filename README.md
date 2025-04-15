@@ -1,4 +1,4 @@
-# WEBTRAVEL
+# WEBTRAVEL_DA
 
 ## Project Overview
 
@@ -6,9 +6,9 @@ DACN_WEBTRAVEL is a web-based travel application designed to provide users with 
 
 ## Language Composition
 
-- **HTML:** 56.7%
-- **Java:** 37%
-- **CSS:** 6.3%
+- **HTML:**
+- **Java:**
+- **CSS:**
 
 ## Features
 
@@ -23,12 +23,12 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/LeDuyLuan2003/DACN_WEBTRAVEL.git
+   git clone https://github.com/LeDuyLuan2003/WEBTRAVEL_DA.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd DACN_WEBTRAVEL
+   cd WEBTRAVEL_DA
    ```
 
 3. Build the project using Maven:
