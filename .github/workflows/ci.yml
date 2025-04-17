@@ -1,8 +1,9 @@
 name: CI/CD - Build, Test & Deploy Spring Boot
+
 # on:
-#  push:
-#    branches:
-#      - main  # Workflow sẽ chạy khi có code được đẩy lên nhánh `main`
+#   push:
+#     branches:
+#       - main
 on:
   workflow_dispatch:
 
@@ -14,10 +15,14 @@ jobs:
         image: mysql:8
         env:
           MYSQL_DATABASE: webtourism
-          MYSQL_ROOT_PASSWORD: luanml001
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=5s --health-timeout=5s --health-retries=40
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=40
 
     steps:
       - name: Checkout code
@@ -32,13 +37,13 @@ jobs:
       - name: Run Tests
         run: mvn test
 
-      - name: Debug Surefire Test Reports
+      - name: Show Test Reports on Failure
         if: failure()
         run: cat target/surefire-reports/*.txt || true
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test  # Đảm bảo job test chạy xong trước
+    needs: test
 
     steps:
       - name: Checkout source code
@@ -50,7 +55,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build project with Maven
+      - name: Build project
         run: mvn clean package -DskipTests
 
       - name: Install sshpass
@@ -64,19 +69,16 @@ jobs:
         run: |
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "hostname"
 
-      - name: Deploy .jar to server
+      - name: Deploy JAR to server
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
         run: |
-          echo "Uploading to $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR"
-          ls -l target
           JAR_FILE=$(ls target/*.jar | head -n1)
-          echo "Found JAR: $JAR_FILE"
-          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "ls -ld $REMOTE_DIR || mkdir -p $REMOTE_DIR"
-          sshpass -v -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no "$JAR_FILE" $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "mkdir -p $REMOTE_DIR"
+          sshpass -p "$SSH_PASSWORD" scp -o StrictHostKeyChecking=no "$JAR_FILE" $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR
 
       # - name: Restart Spring Boot App
       #   env:
@@ -86,9 +88,7 @@ jobs:
       #     REMOTE_DIR: ${{ secrets.REMOTE_DIR }}
       #   run: |
       #     sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST '
-      #       echo "Killing old app if exists..."
       #       pkill -f "java -jar" || true
       #       cd $REMOTE_DIR
-      #       echo "Starting new app..."
       #       nohup java -jar SpringBootJdk22-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
       #     '

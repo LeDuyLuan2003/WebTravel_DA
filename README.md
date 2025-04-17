@@ -1,13 +1,13 @@
-# WEBTRAVEL
+# WEBTRAVEL_DA
+
 ## Project Overview
 
-WEBTRAVEL is a web-based travel application designed to provide users with a seamless experience for planning and booking their travels. The project is built using Spring Boot for the backend, and HTML, CSS for the frontend.
-
+DACN_WEBTRAVEL is a web-based travel application designed to provide users with a seamless experience for planning and booking their travels. The project is built using Spring Boot for the backend, and HTML, CSS for the frontend.
 
 ## Language Composition
 
 - **HTML:**
-- **Java:** 
+- **Java:**
 - **CSS:**
 
 ## Features
@@ -23,12 +23,12 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/LeDuyLuan2003/WEBTRAVEL.git
+   git clone https://github.com/LeDuyLuan2003/WEBTRAVEL_DA.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd WEBTRAVEL
+   cd WEBTRAVEL_DA
    ```
 
 3. Build the project using Maven:
