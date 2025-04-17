@@ -1,9 +1,11 @@
 name: CI/CD - Build, Test & Deploy Spring Boot
 
+# on:
+#   push:
+#     branches:
+#       - main
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   test:
