@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <style>
+        .header-bottom {
+            font-weight: bold;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+
+        .header-bottom.sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: white;
+        }
+
+        footer {
+            background-color: #F0F0F0; /* Lighter gray color */
+            color: #333; /* Dark text color */
+            padding: 30px 0;
+        }
+
+        footer h3 {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer ul li {
+            margin-bottom: 10px;
+        }
+
+        footer ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        footer ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+       .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+        }
+        .social-icons a:hover {
+            transform: scale(1.1); /* Tăng kích thước icon khi hover */
+            transition: transform 0.2s; /* Thêm hiệu ứng chuyển động mượt mà */
+        }
+
+        .social-icons a i {
+            font-size: 20px;
+            line-height: 40px;
+        }
+
+        .social-icons a:nth-child(1) {
+            background-color: #3b5998; /* Facebook */
+        }
+
+        .social-icons a:nth-child(2) {
+            background-color: #1da1f2; /* Twitter */
+        }
+
+        .social-icons a:nth-child(3) {
+            background-color: #e4405f; /* Instagram */
+        }
+
+        .social-icons a:nth-child(4) {
+            background-color: #ff0000; /* YouTube */
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white header-bottom">
+    <div class="container-fluid">
+        <a class="navbar-brand text-warning" href="/">VIETNAM AMAZING</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                    <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                        <li><a class="dropdown-item" th:href="@{/vehicle}">Vehicle</a></li>
+                        <li><a class="dropdown-item" th:href="@{/Hotel}">Hotel</a></li>
+                        <li><a class="dropdown-item" th:href="@{/Visa}">Visa</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/aboutUs}" class="nav-link text-dark">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/contact}" class="nav-link text-dark">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/booking}" class="nav-link text-dark">Booking</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/blog}" class="nav-link text-dark">Blog</a>
+                </li>
+
+            </ul>
+
+<!--            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">-->
+<!--                <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">-->
+<!--                    <span class="navbar-text text-dark">Account: <span sec:authentication="name"></span></span>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--                    <form th:action="@{/logout}" method="post">-->
+<!--                        <button class="btn btn-outline-dark" type="submit">Logout</button>-->
+<!--                    </form>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="!isAuthenticated()">-->
+<!--                    <a class="btn btn-outline-dark" href="/login">Login</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <section layout:fragment="content">
+        <!-- Nội dung cụ thể của từng trang sẽ được đặt tại đây -->
+    </section>
+</div>
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Our COVID-19 Response</a></li>
+                    <li><a href="#">Cancellation options</a></li>
+                    <li><a href="#">Safety information</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Community Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Terms of service</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#">Partnerships</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Get in touch</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <h3>Social</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="bi bi-facebook" ></i></a>
+                    <a href="#"><i class="bi bi-twitter" ></i></a>
+                    <a href="#"><i class="bi bi-instagram" ></i></a>
+                    <a href="#"><i class="bi bi-youtube" ></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    window.onscroll = function() {
+        var header = document.querySelector('.header-bottom');
+        if (window.scrollY > 50) {
+            header.classList.add('sticky');
+        } else {
+            header.classList.remove('sticky');
+        }
+    };
+</script>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/674b10462480f5b4f5a62430/1idujf5nh';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+
+
+</body>
+
+
+</html>

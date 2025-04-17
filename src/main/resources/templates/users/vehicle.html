@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Amazing - Thuê xe ô tô du lịch</title>
+    <link rel="stylesheet" th:href="@{/css/users/vehicle.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<section layout:fragment="content">
+    <header class="container text-center my-4">
+        <h1>Thuê Xe Ô Tô Du Lịch</h1>
+        <p>Du lịch Việt Nam Tuyệt Vời cung cấp các loại xe ô tô vận chuyển từ 4 chỗ đến 45 chỗ phục vụ tham quan, cưới hỏi, thuê xe theo ngày hoặc thuê xe tự lái.</p>
+    </header>
+
+    <section class="vehicle-section container my-5">
+        <div class="row mb-4 vehicle-item" style="background-image: url('/uploads/sedan.png');">
+            <div class="col-md-12 vehicle-content">
+                <h2>Xe 4 chỗ</h2>
+                <p>Xe sedan đời mới, phù hợp cho những chuyến đi gia đình nhỏ hoặc cá nhân. Đầy đủ tiện nghi và tiết kiệm nhiên liệu.</p>
+            </div>
+        </div>
+        <div class="row mb-4 vehicle-item" style="background-image: url('https://otoansuong.vn/upload/tour/xe-tai-van-tera-v2-945kg-may-mitsubishi080910958336_640x480.jpg');">
+            <div class="col-md-12 vehicle-content">
+                <h2>Xe 16 chỗ</h2>
+                <p>Xe van 16 chỗ rộng rãi, phù hợp cho các nhóm khách du lịch, gia đình lớn hoặc các chuyến đi công tác với nhóm.</p>
+            </div>
+        </div>
+        <div class="row mb-4 vehicle-item" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4DNw32NY8HzRNX64aQZ4p3xtv0mow5nY_pg&s');">
+            <div class="col-md-12 vehicle-content">
+                <h2>Xe 45 chỗ</h2>
+                <p>Xe buýt cỡ lớn, đáp ứng nhu cầu vận chuyển đoàn khách đông người với đầy đủ tiện nghi và tài xế chuyên nghiệp.</p>
+            </div>
+        </div>
+        <section class="get-in-touch fade-in">
+            <h2>Liên hệ với chúng tôi</h2>
+            <p>Một trong những chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn. Hãy liên hệ với chúng tôi để biết thêm chi tiết về các tour du lịch và dịch vụ của Vietnam Amazing.</p>
+            <a th:href="@{/contact}" class="btn btn-light">Liên hệ với chúng tôi</a>
+        </section>
+    </section>
+</section>
+</body>
+</html>

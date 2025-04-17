@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Add/Edit Tour Schedule</title>
+    <!-- Add Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content" class="container mt-5">
+    <h1 class="mb-4">Add/Edit Tour Schedule</h1>
+    <form th:action="@{/admin/tourSchedules/new}" th:object="${schedule}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <!-- Tour Selection -->
+        <div class="mb-3">
+            <label for="tour" class="form-label">Select Tour:</label>
+            <select id="tour" th:field="*{tour.id}" class="form-control" required>
+                <option value="">-- Select Tour --</option>
+                <option th:each="tour : ${tours}" th:value="${tour.id}" th:text="${tour.name}"></option>
+            </select>
+            <div class="invalid-feedback">Please select a tour.</div>
+        </div>
+
+        <!-- Start Date -->
+        <div class="mb-3">
+            <label for="startDate" class="form-label">Start Date:</label>
+            <input type="date" id="startDate" th:field="*{startDate}" class="form-control" required/>
+            <div class="invalid-feedback">Start Date is required.</div>
+        </div>
+
+        <!-- End Date -->
+        <div class="mb-3">
+            <label for="endDate" class="form-label">End Date:</label>
+            <input type="date" id="endDate" th:field="*{endDate}" class="form-control" required/>
+            <div class="invalid-feedback">End Date is required.</div>
+        </div>
+
+        <!-- Buttons -->
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a th:href="@{/admin/tourSchedules}" class="btn btn-secondary">Back to List</a>
+    </form>
+
+      <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-admin}">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+<section layout:fragment="custom-content">
+    <div class="container mt-5">
+        <h1>List Employees</h1>
+        <a class="btn btn-primary mb-3" th:href="@{/admin/employees/add}">Add Employee</a>
+        <table id="userTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${employees}">
+                <td th:text="${user.id}">1</td>
+                <td th:text="${user.username}">username</td>
+                <td th:text="${user.phone}">phone</td>
+                <td th:text="${user.email}">email</td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{/admin/employees/edit/{id}(id=${user.id})}">Edit</a>
+                    <a class="btn btn-danger" th:href="@{/admin/employees/delete/{id}(id=${user.id})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#userTable').DataTable({
+                "paging": true,
+                "searching": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+    </script>
+</section>
+
+</body>
+</html>
