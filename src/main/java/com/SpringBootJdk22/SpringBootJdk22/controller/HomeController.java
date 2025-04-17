@@ -34,6 +34,7 @@ public class HomeController {
     public void addCategoriesToModel(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
     }
+
     @GetMapping("itemCategory/byCategory/{categoryId}")
     @ResponseBody
     public List<ItemCategory> getItemCategoriesByCategory(@PathVariable("categoryId") Long categoryId) {
@@ -57,7 +58,7 @@ public class HomeController {
         }
 
         model.addAttribute("categories", categories);
-        return "/users/home";
+        return "users/home";
     }
 
 
@@ -70,21 +71,21 @@ public class HomeController {
         Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
-        return "/users/tour-detail";
+        return "users/tour-detail";
     }
     @GetMapping("/aboutUs")
     public String showAboutUs(Model model) {
-        return "/users/about-us";
+        return "users/about-us";
     }
     @GetMapping("/vehicle")
     public String showVehicle(Model model) {
-        return "/users/vehicle";
+        return "users/vehicle";
     }
 
     @GetMapping("/contact")
     public String showContact(Model model) {
         model.addAttribute("contact", new Contact());
-        return "/users/contact";
+        return "users/contact";
     }
 
     @PostMapping("/contact")
@@ -100,7 +101,7 @@ public class HomeController {
 
     @GetMapping("/blog")
     public String showBlog(Model model) {
-        return "/users/blog";
+        return "users/blog";
     }
 
     // Hiển thị form Booking
@@ -112,7 +113,7 @@ public class HomeController {
 
         // Tạo Booking object để bind dữ liệu từ form
         model.addAttribute("booking", new Booking());
-        return "/users/booking"; // Đường dẫn đến file Thymeleaf của form booking
+        return "users/booking"; // Đường dẫn đến file Thymeleaf của form booking
     }
 
     // API: Lấy danh sách lịch trình (TourSchedule) theo Tour ID
@@ -136,31 +137,31 @@ public class HomeController {
 
     @GetMapping("/filter")
     public String filterTours(
-                              @RequestParam(required = false) Long priceMin,
-                              @RequestParam(required = false) Long priceMax,
-                              @RequestParam(required = false) String startDate,
-                              @RequestParam(required = false) String categoryName,
-                              @RequestParam(required = false) String itemCategoryName,
-                              Model model) {
+            @RequestParam(required = false) Long priceMin,
+            @RequestParam(required = false) Long priceMax,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String categoryName,
+            @RequestParam(required = false) String itemCategoryName,
+            Model model) {
         LocalDate parsedStartDate = null;
         if (startDate != null && !startDate.isEmpty()) {
             try {
                 parsedStartDate = LocalDate.parse(startDate); // Chuyển từ String sang LocalDate
             } catch (DateTimeParseException e) {
                 model.addAttribute("errorMessage", "Invalid start date format. Expected yyyy-MM-dd.");
-                return "/users/search"; // Trả về trang lỗi
+                return "users/search"; // Trả về trang lỗi
             }
         }
         List<Tour> tours = tourService.filterTours(priceMin, priceMax, parsedStartDate, categoryName, itemCategoryName);
         model.addAttribute("tours", tours);
-        return "/users/search";
+        return "users/search";
     }
 
 
     //exception
     @RequestMapping("/403")
     public String accessDenied() {
-        return "/403"; // Trả về tên của file HTML chứa nội dung lỗi 403
+        return "403"; // Trả về tên của file HTML chứa nội dung lỗi 403
     }
 
 }
