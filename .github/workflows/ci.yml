@@ -89,6 +89,7 @@ jobs:
         run: |
           sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST '
             fuser -k 8080/tcp
+            sleep 3
             cd $REMOTE_DIR
             nohup java -jar SpringBootJdk22-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
           '
