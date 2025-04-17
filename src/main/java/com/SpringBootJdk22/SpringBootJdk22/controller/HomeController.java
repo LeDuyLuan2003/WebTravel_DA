@@ -34,6 +34,7 @@ public class HomeController {
     public void addCategoriesToModel(Model model) {
         model.addAttribute("categories", categoryService.getAllCategories());
     }
+
     @GetMapping("itemCategory/byCategory/{categoryId}")
     @ResponseBody
     public List<ItemCategory> getItemCategoriesByCategory(@PathVariable("categoryId") Long categoryId) {
