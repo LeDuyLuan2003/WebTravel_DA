@@ -24,6 +24,7 @@ public class UserController {
         model.addAttribute("user", new User()); // Thêm một đối tượng User mới vào model
         return "users/register";
     }
+
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user, // Validate đối tượng User
                                    @NotNull BindingResult bindingResult, // Kết quả của quá trình validate

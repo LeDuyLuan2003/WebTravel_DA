@@ -21,6 +21,7 @@ public class ItemCategoryController {
     private final ItemCategoryService itemCategoryService;
     private final CategoryService categoryService;
 
+
     // Hiển thị danh sách ItemCategory theo category
     @GetMapping("/category/{categoryId}")
     public String viewItemsByCategory(@PathVariable("categoryId") Long categoryId, Model model) {

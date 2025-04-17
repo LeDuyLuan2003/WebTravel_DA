@@ -26,6 +26,7 @@ import java.util.UUID;
 public class EmployeeController {
 
 
+
     @Autowired
     private TourService tourService;
 
@@ -40,13 +41,13 @@ public class EmployeeController {
 
     @GetMapping
     public String employee() {
-        return "/layout-employee";
+        return "layout-employee";
     }
 
     @GetMapping("/tour")
     public String showProductList(Model model) {
         model.addAttribute("tours", tourService.getAllTours());
-        return "/employee/tours/tour-list";
+        return "employee/tours/tour-list";
     }
 
 
@@ -55,14 +56,14 @@ public class EmployeeController {
         Tour tour = tourService.getTourById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tour Id:" + id));
         model.addAttribute("tour", tour);
-        return "/users/tour-detail";
+        return "users/tour-detail";
     }
 
     @GetMapping("/tour/add")
     public String showAddForm(Model model) {
         model.addAttribute("tour", new Tour());
         model.addAttribute("categories", categoryService.getAllCategories());
-        return "/employee/tours/add-tour";
+        return "employee/tours/add-tour";
     }
 
     @PostMapping("/tour/add")
@@ -73,7 +74,7 @@ public class EmployeeController {
                              Model model) {
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.getAllCategories());
-            return "/employee/tours/add-tour";
+            return "employee/tours/add-tour";
         }
 
         // Calculate finalPrice based on discountPercentage and price
